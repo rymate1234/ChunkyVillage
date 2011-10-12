@@ -13,12 +13,15 @@ import org.getchunky.chunkyvillage.commands.set.SetName;
 import org.getchunky.chunkyvillage.commands.toggle.Toggle;
 import org.getchunky.chunkyvillage.commands.toggle.ToggleAssistant;
 import org.getchunky.chunkyvillage.listeners.ChunkyEvents;
+import org.getchunky.chunkyvillage.listeners.PlayerEvents;
 import org.getchunky.chunkyvillage.util.Config;
 
 import java.util.Arrays;
 
 public class ChunkyVillage extends JavaPlugin {
+
     private ChunkyEvents chunkyEvents;
+    private PlayerEvents playerEvents;
 
     private static Plugin plugin;
 
@@ -41,6 +44,8 @@ public class ChunkyVillage extends JavaPlugin {
         chunkyEvents = new ChunkyEvents();
         Chunky.getModuleManager().registerEvent(ChunkyEvent.Type.PLAYER_CHUNK_CLAIM, chunkyEvents, ChunkyEvent.Priority.Normal,this);
         Chunky.getModuleManager().registerEvent(ChunkyEvent.Type.PLAYER_CHUNK_CHANGE, chunkyEvents, ChunkyEvent.Priority.Normal,this);
+
+
 
         registerChunkyCommands();
 
@@ -91,18 +96,14 @@ public class ChunkyVillage extends JavaPlugin {
             Chunky.getModuleManager().registerCommand(spawn);
             Chunky.getModuleManager().registerCommand(leave);
             Chunky.getModuleManager().registerCommand(withdraw);
-
             Chunky.getModuleManager().registerCommand(forSale);
             Chunky.getModuleManager().registerCommand(notForSale);
             Chunky.getModuleManager().registerCommand(tax);
-
             Chunky.getModuleManager().registerCommand(addResident);
             Chunky.getModuleManager().registerCommand(kickResident);
-
             Chunky.getModuleManager().registerCommand(set);
             Chunky.getModuleManager().registerCommand(setName);
             Chunky.getModuleManager().registerCommand(setMayor);
-
             Chunky.getModuleManager().registerCommand(toggle);
             Chunky.getModuleManager().registerCommand(toggleAssistant);
 
