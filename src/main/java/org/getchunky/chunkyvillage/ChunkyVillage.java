@@ -50,27 +50,39 @@ public class ChunkyVillage extends JavaPlugin {
     private void registerChunkyCommands(){
         ChunkyCommand root = Chunky.getModuleManager().getCommandByName("chunky");
         try {
-            ChunkyCommand town = new ChunkyCommand("town", Arrays.asList("t"),"Teleport to your town.",Arrays.asList("/chunky town or /c t <name>"),new Town(),root);
-            ChunkyCommand list = new ChunkyCommand("list", Arrays.asList("l"),"Lists towns.",Arrays.asList("/c town list or /c t l"),new List(),town);
+            ChunkyCommand town = new ChunkyCommand("town",new Town(),root).setAliases("t").setHelpLines("/chunky town or /c t").setDescription("Shows information about town");
 
-            ChunkyCommand newTown = new ChunkyCommand("new", Arrays.asList("n"),"Create a new town",Arrays.asList("/c town new or /c t n"),new NewTown(),town);
-            ChunkyCommand forSale = new ChunkyCommand("forsale", Arrays.asList("fs"),"Sets land for sale",Arrays.asList("/c town forsale <cost> or /c t fs <cost>"),new ForSale(),town);
-            ChunkyCommand notForSale = new ChunkyCommand("notforsale", Arrays.asList("nfs"),"Removes land from market",Arrays.asList("/c town notforsale or /c t nfs"),new NotForSale(),town);
-            ChunkyCommand addResident = new ChunkyCommand("add", Arrays.asList("a"),"Adds resident to town.",Arrays.asList("/c town add <player> or /c t k <player>"),new AddResident(),town);
-            ChunkyCommand kickResident = new ChunkyCommand("kick", Arrays.asList("k"),"Removes resident from town.",Arrays.asList("/c town kick <player> or /c t r <player>"),new KickResident(),town);
-            ChunkyCommand tax = new ChunkyCommand("tax", Arrays.asList("tax"),"Taxes all residents.",Arrays.asList("/c town tax <1-100> or /c t tax <1-100>"),new Tax(),town);
-            ChunkyCommand vote = new ChunkyCommand("vote", Arrays.asList("v"),"Votes for a mayor.",Arrays.asList("/c town vote <player> or /c t v <player>"),new Vote(),town);
-            ChunkyCommand spawn = new ChunkyCommand("spawn", Arrays.asList("s"),"Teleport to town.",Arrays.asList("/c town spawn or /c t s"),new Spawn(),town);
-            ChunkyCommand leave = new ChunkyCommand("leave", Arrays.asList("lv"),"Leave from the town.",Arrays.asList("/c town leave or /c t lv"),new Leave(),town);
-            ChunkyCommand withdraw = new ChunkyCommand("withdraw", Arrays.asList("w"),"Withdraw money.",Arrays.asList("/c town withdraw <amount> or /c t w <amount>"),new Withdraw(),town);
-            ChunkyCommand deposit = new ChunkyCommand("deposit", Arrays.asList("d"),"Deposit money.",Arrays.asList("/c town deposit <amount> or /c t d <amount>"),new Deposit(),town);
+            ChunkyCommand list = new ChunkyCommand("list",new List(),town).setAliases("l").setHelpLines("/c town list or /c t l").setDescription("Lists towns.");
 
-            ChunkyCommand set = new ChunkyCommand("set", Arrays.asList("s"),"Change various options.",Arrays.asList("/c town set ? or /c t s ?"),new Set(),town);
-            ChunkyCommand setName = new ChunkyCommand("name", Arrays.asList("n"),"Sets town name.",Arrays.asList("/c town set name <name> or /c t s n <name>"),new SetName(),set);
-            ChunkyCommand setMayor = new ChunkyCommand("mayor", Arrays.asList("m"),"Sets new mayor.",Arrays.asList("/c town set mayor <name> or /c t s m <name>"),new SetMayor(),set);
+            ChunkyCommand newTown = new ChunkyCommand("new",new NewTown(),town).setAliases("n").setHelpLines("/c t new <name>").setDescription("Create a new town.");
 
-            ChunkyCommand toggle = new ChunkyCommand("toggle", Arrays.asList("t"),"Toggle various options.",Arrays.asList("/c town toggle ? or /c t t ?"),new Toggle(),town);
-            ChunkyCommand toggleAssistant = new ChunkyCommand("assistant", Arrays.asList("a"),"Toggles an assistant.",Arrays.asList("/c town toggle assistant <name> or /c t t a <name>"),new ToggleAssistant(),toggle);
+            ChunkyCommand forSale = new ChunkyCommand("forsale",new ForSale(),town).setAliases("fs").setHelpLines("/c t fs <cost>").setDescription("Set plot for sale.");
+
+            ChunkyCommand notForSale = new ChunkyCommand("notforsale",new NotForSale(),town).setAliases("nfs").setHelpLines("/c t nfs").setDescription("Removes a plot from sale");
+
+            ChunkyCommand addResident = new ChunkyCommand("add",new AddResident(),town).setAliases("a").setDescription("Adds resident to town.").setHelpLines("/c town add <player> or /c t k <player>");
+
+            ChunkyCommand kickResident = new ChunkyCommand("kick",new KickResident(),town).setAliases("k").setDescription("Removes resident from town.").setHelpLines("/c town kick <player> or /c t r <player>");
+
+            ChunkyCommand tax = new ChunkyCommand("tax",new Tax(),town).setAliases("tax").setDescription("Taxes all residents.").setHelpLines("/c town tax <1-100> or /c t tax <1-100>");
+
+            ChunkyCommand vote = new ChunkyCommand("vote",new Vote(),town).setAliases("v").setDescription("Votes for a mayor.").setHelpLines("/c town vote <player> or /c t v <player>");
+
+            ChunkyCommand spawn = new ChunkyCommand("spawn",new Spawn(),town).setAliases("s").setDescription("Teleport to town.").setHelpLines("/c town spawn or /c t s");
+
+            ChunkyCommand leave = new ChunkyCommand("leave",new Leave(),town).setAliases("lv").setDescription("Leave the town").setHelpLines("/c town leave or /c t lv");
+
+            ChunkyCommand withdraw = new ChunkyCommand("withdraw",new Withdraw(),town).setAliases("w").setDescription("Withdraw money from town bank.").setHelpLines("c town withdraw <amount> or /c t w <amount>");
+
+            ChunkyCommand set = new ChunkyCommand("set",new Set(),town).setAliases("s").setDescription("Set various options.").setHelpLines("/c town set ? or /c t s ?");
+
+            ChunkyCommand setName = new ChunkyCommand("name",new SetName(),set).setAliases("n").setDescription("Set town name.").setHelpLines("/c town set name <name> or /c t s n <name>");
+
+            ChunkyCommand setMayor = new ChunkyCommand("mayor",new SetMayor(),set).setAliases("m").setDescription("Set town mayor.").setHelpLines("/c town set mayor <name> or /c t s m <name>");
+
+            ChunkyCommand toggle = new ChunkyCommand("toggle",new Set(),town).setAliases("t").setDescription("Toggle various options.").setHelpLines("/c town toggle ? or /c t t ?");
+
+            ChunkyCommand toggleAssistant = new ChunkyCommand("assistant",new ToggleAssistant(),toggle).setAliases("a").setDescription("Toggles an assistant.").setHelpLines("/c town toggle assistant <name> or /c t t a <name>");
 
             Chunky.getModuleManager().registerCommand(town);
             Chunky.getModuleManager().registerCommand(newTown);

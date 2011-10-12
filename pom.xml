@@ -49,7 +49,7 @@
         <dependency>
             <groupId>org.getchunky</groupId>
             <artifactId>Chunky</artifactId>
-            <version>Afghan-SNAPSHOT</version>
+            <version>Buddha-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>
