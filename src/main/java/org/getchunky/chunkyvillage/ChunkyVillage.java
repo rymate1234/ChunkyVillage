@@ -53,7 +53,7 @@ public class ChunkyVillage extends JavaPlugin {
         PluginManager pm = this.getServer().getPluginManager();
 
         playerEvents = new PlayerEvents();
-        pm.registerEvent(Event.Type.PLAYER_RESPAWN, playerEvents, Event.Priority.Normal,this);
+        pm.registerEvent(Event.Type.PLAYER_RESPAWN, playerEvents, Event.Priority.Normal, this);
 
 
 
@@ -87,7 +87,9 @@ public class ChunkyVillage extends JavaPlugin {
 
             ChunkyCommand leave = new ChunkyCommand("leave",new Leave(),town).setAliases("lv").setDescription("Leave the town").setHelpLines("/c town leave or /c t lv");
 
-            ChunkyCommand withdraw = new ChunkyCommand("withdraw",new Withdraw(),town).setAliases("w").setDescription("Withdraw money from town bank.").setHelpLines("c town withdraw <amount> or /c t w <amount>");
+            ChunkyCommand withdraw = new ChunkyCommand("withdraw",new Withdraw(),town).setAliases("w").setDescription("Withdraw money from town bank.").setHelpLines("/c town withdraw <amount> or /c t w <amount>");
+
+            ChunkyCommand deposit = new ChunkyCommand("deposit",new Deposit(),town).setAliases("d").setDescription("Deposit money into town bank.").setHelpLines("/c town deposit <amount> or /c t d <amount>");
 
             ChunkyCommand set = new ChunkyCommand("set",new Set(),town).setAliases("s").setDescription("Set various options.").setHelpLines("/c town set ? or /c t s ?");
 
@@ -106,6 +108,7 @@ public class ChunkyVillage extends JavaPlugin {
             Chunky.getModuleManager().registerCommand(spawn);
             Chunky.getModuleManager().registerCommand(leave);
             Chunky.getModuleManager().registerCommand(withdraw);
+            Chunky.getModuleManager().registerCommand(deposit);
             Chunky.getModuleManager().registerCommand(forSale);
             Chunky.getModuleManager().registerCommand(notForSale);
             Chunky.getModuleManager().registerCommand(tax);

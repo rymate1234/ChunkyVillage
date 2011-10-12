@@ -21,7 +21,7 @@ public class Deposit implements ChunkyCommandExecutor{
         ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(sender.getName());
 
         if(strings.length < 1) {
-            Language.sendBad(chunkyPlayer,"You must specify the amount to withdraw.");
+            Language.sendBad(chunkyPlayer,"You must specify the amount to deposit.");
             return;
         }
 
