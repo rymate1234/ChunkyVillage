@@ -259,6 +259,14 @@ public class ChunkyTown extends ChunkyObject {
         }
     }
 
+    public long getAverageInfluence() {
+        long influence = 0;
+        HashSet<ChunkyObject> residents = getResidents();
+        for(ChunkyObject chunkyObject : residents) {
+            influence+=ChunkyTownManager.getPlayTime(chunkyObject);}
+        return influence/residents.size();
+    }
+
 
 }
 

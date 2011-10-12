@@ -9,6 +9,8 @@ import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
 import org.json.JSONException;
 
+import java.util.HashMap;
+
 public class ChunkyTownManager {
 
     public static ChunkyTown getTown(String name) {
@@ -44,5 +46,20 @@ public class ChunkyTownManager {
     public static Method.MethodAccount getAccount(ChunkyObject chunkyObject) {
         return Chunky.getMethod().getAccount(chunkyObject.getName());
     }
+
+    public static HashMap<String, ChunkyObject> getTowns() {
+        return ChunkyManager.getObjectsOfType(ChunkyTown.class.getName());
+    }
+
+    public static long getPlayTime(ChunkyObject chunkyPlayer) {
+        long curTime = System.currentTimeMillis();
+        long joinTime = curTime;
+        if(chunkyPlayer.getData().has("village-lastJoin")) joinTime = chunkyPlayer.getData().getLong("village-lastJoin");
+        long playTime = 0;
+        if(chunkyPlayer.getData().has("village-playTime")) playTime = chunkyPlayer.getData().getLong("village-playTime");
+        long newTime = playTime + (curTime-joinTime)/(1000*60);
+        return newTime;
+    }
+
 
 }

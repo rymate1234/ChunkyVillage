@@ -39,7 +39,7 @@ public class NewTown implements ChunkyCommandExecutor{
         }
         String id = strings[0];
         ChunkyTown chunkyTown = new ChunkyTown();
-        chunkyTown.setId(id);
+        chunkyTown.setId(ChunkyManager.getUniqueId());
         chunkyTown.setMayor(chunkyPlayer).setHome(chunkyChunk).setName(id);
         chunkyChunk.setOwner(chunkyTown, true,true);
         chunkyChunk.save();

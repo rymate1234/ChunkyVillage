@@ -18,14 +18,24 @@ public class Town implements ChunkyCommandExecutor{
             Language.IN_GAME_ONLY.bad(sender);
             return;
         }
-        ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(sender.getName());
-        ChunkyTown chunkyTown = ChunkyTownManager.getTown(chunkyPlayer);
 
+        //Defaults to player's town.
+        ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(sender.getName());
+
+        //Match Town in param
+        ChunkyTown chunkyTown = ChunkyTownManager.getTown(chunkyPlayer);
+        if(strings.length > 0) {
+            String n = strings[0].toLowerCase();
+            for(ChunkyObject chunkyObject : ChunkyTownManager.getTowns().values()) {
+                if(chunkyObject.getName().toLowerCase().contains(n)) chunkyTown = (ChunkyTown)chunkyObject;}}
+
+        //Return if no town found.
         if(chunkyTown==null) {
-            Language.sendBad(chunkyPlayer, "You are not part of a town");
+            Language.sendBad(chunkyPlayer, "Town not found.");
             return;
         }
 
+        //Print info
         sender.sendMessage(ChatColor.GRAY + "|-------------------" + ChatColor.GREEN + "["+ChatColor.GOLD + chunkyTown.getName()+ChatColor.GREEN + "]" + ChatColor.GRAY + "-------------------|");
         String res = "";
         int i=0;
@@ -47,7 +57,8 @@ public class Town implements ChunkyCommandExecutor{
         sender.sendMessage(
                 ChatColor.GRAY + "| " + ChatColor.GREEN + "Size: " + ChatColor.YELLOW + chunkyTown.claimedChunkCount() + "/" +chunkyTown.maxChunks() +
                 ChatColor.GRAY + " | "+ ChatColor.GREEN + "Bank: " + ChatColor.YELLOW + chunkyTown.getAccount().balance() +
-                ChatColor.GRAY + " | "+ ChatColor.GREEN + "Mayor: " + ChatColor.YELLOW + chunkyTown.getMayor().getName());
+                ChatColor.GRAY + " | "+ ChatColor.GREEN + "Mayor: " + ChatColor.YELLOW + chunkyTown.getMayor().getName()+
+                ChatColor.GRAY + " | "+ ChatColor.GREEN + "Influence: " + ChatColor.YELLOW + chunkyTown.getAverageInfluence());
 
         sender.sendMessage(ChatColor.GRAY + "| " + ChatColor.GREEN + "Assistant: " + ChatColor.YELLOW + ass + ((i>40) ? " and more" : ""));
         sender.sendMessage(ChatColor.GRAY + "| " + ChatColor.GREEN + "Population: " + ChatColor.YELLOW + res + ((i>40) ? " and more" : ""));
