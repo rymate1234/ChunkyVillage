@@ -1,12 +1,16 @@
 package org.getchunky.chunkyvillage;
 
+import org.bukkit.event.*;
+import org.bukkit.event.Event;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.event.ChunkyEvent;
 import org.getchunky.chunky.exceptions.ChunkyUnregisteredException;
 import org.getchunky.chunky.module.ChunkyCommand;
 import org.getchunky.chunkyvillage.commands.*;
+import org.getchunky.chunkyvillage.commands.List;
 import org.getchunky.chunkyvillage.commands.set.Set;
 import org.getchunky.chunkyvillage.commands.set.SetMayor;
 import org.getchunky.chunkyvillage.commands.set.SetName;
@@ -16,6 +20,7 @@ import org.getchunky.chunkyvillage.listeners.ChunkyEvents;
 import org.getchunky.chunkyvillage.listeners.PlayerEvents;
 import org.getchunky.chunkyvillage.util.Config;
 
+import java.awt.*;
 import java.util.Arrays;
 
 public class ChunkyVillage extends JavaPlugin {
@@ -44,6 +49,11 @@ public class ChunkyVillage extends JavaPlugin {
         chunkyEvents = new ChunkyEvents();
         Chunky.getModuleManager().registerEvent(ChunkyEvent.Type.PLAYER_CHUNK_CLAIM, chunkyEvents, ChunkyEvent.Priority.Normal,this);
         Chunky.getModuleManager().registerEvent(ChunkyEvent.Type.PLAYER_CHUNK_CHANGE, chunkyEvents, ChunkyEvent.Priority.Normal,this);
+
+        PluginManager pm = this.getServer().getPluginManager();
+
+        playerEvents = new PlayerEvents();
+        pm.registerEvent(Event.Type.PLAYER_RESPAWN, playerEvents, Event.Priority.Normal,this);
 
 
 
