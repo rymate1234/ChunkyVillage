@@ -125,6 +125,7 @@ public class ChunkyTown extends ChunkyObject {
 
     public ChunkyTown addResident(ChunkyPlayer chunkyPlayer) {
         chunkyPlayer.setOwner(this,false,true);
+        chunkyPlayer.getData().put("village-playTime",0);
         return this;
     }
 
@@ -249,6 +250,7 @@ public class ChunkyTown extends ChunkyObject {
                 chunkyObject.setOwner(null,true,false);
             }}
         this.getOwner().getData().remove("mayor");
+        this.getOwner().save();
         this.setOwner(null,false,true);
         save();
         delete();
