@@ -24,6 +24,13 @@ public class ChunkyTownManager {
         return null;
     }
 
+    public static ChunkyTown matchTown(String input) {
+        String n = input.toLowerCase();
+        for(ChunkyObject chunkyObject : ChunkyTownManager.getTowns().values()) {
+            if(chunkyObject.getName().toLowerCase().contains(n)) return (ChunkyTown)chunkyObject;}
+        return null;
+    }
+
     public static ChunkyTown isMayor (ChunkyPlayer chunkyPlayer) {
         try {
             String id = chunkyPlayer.getData().getString("mayor");
@@ -57,8 +64,8 @@ public class ChunkyTownManager {
         if(chunkyPlayer.getData().has("village-lastJoin")) joinTime = chunkyPlayer.getData().getLong("village-lastJoin");
         long playTime = 0;
         if(chunkyPlayer.getData().has("village-playTime")) playTime = chunkyPlayer.getData().getLong("village-playTime");
-        long newTime = playTime + (curTime-joinTime)/(1000*60);
-        return newTime;
+        return playTime + (curTime-joinTime)/(1000*60);
+
     }
 
 

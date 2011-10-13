@@ -271,6 +271,66 @@ public class ChunkyTown extends ChunkyObject {
         return influence/residents.size();
     }
 
+    public enum Stance {
+        ENEMY,
+        NEUTRAL,
+        ALLY;
+
+        @Override
+        public String toString() {
+            switch (this) {
+                case ENEMY:
+                    return ChatColor.RED + "Enemy";
+                case ALLY:
+                    return ChatColor.DARK_GREEN + "Ally";
+                case NEUTRAL:
+                    return ChatColor.WHITE + "Neutral";
+            }
+            return this.name();
+        }
+    }
+
+    public Stance getStanceFromString(String string) {
+        for(Stance stance : Stance.values()) {
+            if(stance.name().equalsIgnoreCase(string)) return stance;
+        }
+        return null;
+    }
+
+    public Stance setStance(ChunkyTown chunkyTown, String stance) {
+        return setStance(chunkyTown, getStanceFromString(stance));
+    }
+
+    public Stance setStance(ChunkyTown chunkyTown, Stance stance) {
+        if(getStance(chunkyTown).equals(stance)) return null;
+        getDiplomacy().put(chunkyTown.getId(),stance.name());
+        save();
+        return stance;
+    }
+
+    public Stance getStance(ChunkyTown chunkyTown) {
+        if(getDiplomacy().has(chunkyTown.getId())) return getStanceFromString(getDiplomacy().getString(chunkyTown.getId()));
+        return Stance.NEUTRAL;
+    }
+
+
+    public Stance getEffectiveStance(ChunkyTown otherTown) {
+        Stance myStance = getStance(otherTown);
+        Stance theirStance = getStance(this);
+        if(myStance.equals(Stance.ENEMY) || theirStance.equals(Stance.ENEMY)) return Stance.ENEMY;
+        if(myStance.equals(Stance.ALLY) && theirStance.equals(Stance.ALLY)) return Stance.ALLY;
+        return Stance.NEUTRAL;
+    }
+
+    public JSONObject getDiplomacy() {
+        JSONObject ret = this.getData().optJSONObject("diplomacy");
+        if(ret==null) {
+            ret =  new JSONObject();
+            this.getData().put("diplomacy",ret);
+        }
+        return ret;
+    }
+
 
 }
 

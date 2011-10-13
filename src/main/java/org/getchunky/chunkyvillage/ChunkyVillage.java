@@ -14,6 +14,7 @@ import org.getchunky.chunkyvillage.commands.List;
 import org.getchunky.chunkyvillage.commands.set.Set;
 import org.getchunky.chunkyvillage.commands.set.SetMayor;
 import org.getchunky.chunkyvillage.commands.set.SetName;
+import org.getchunky.chunkyvillage.commands.set.SetStance;
 import org.getchunky.chunkyvillage.commands.toggle.Toggle;
 import org.getchunky.chunkyvillage.commands.toggle.ToggleAssistant;
 import org.getchunky.chunkyvillage.listeners.ChunkyEvents;
@@ -99,6 +100,8 @@ public class ChunkyVillage extends JavaPlugin {
 
             ChunkyCommand setMayor = new ChunkyCommand("mayor",new SetMayor(),set).setAliases("m").setDescription("Set town mayor.").setHelpLines("/c town set mayor <name> or /c t s m <name>");
 
+            ChunkyCommand setStance = new ChunkyCommand("stance",new SetStance(),set).setAliases("s").setDescription("Set town's stance.").setHelpLines("/c town set stace <name> <neutral|enemy|ally> or /c t s s <neutral|enemy|ally>");
+
             ChunkyCommand toggle = new ChunkyCommand("toggle",new Set(),town).setAliases("t").setDescription("Toggle various options.").setHelpLines("/c town toggle ? or /c t t ?");
 
             ChunkyCommand toggleAssistant = new ChunkyCommand("assistant",new ToggleAssistant(),toggle).setAliases("a").setDescription("Toggles an assistant.").setHelpLines("/c town toggle assistant <name> or /c t t a <name>");
@@ -122,6 +125,7 @@ public class ChunkyVillage extends JavaPlugin {
             Chunky.getModuleManager().registerCommand(set);
             Chunky.getModuleManager().registerCommand(setName);
             Chunky.getModuleManager().registerCommand(setMayor);
+            Chunky.getModuleManager().registerCommand(setStance);
             Chunky.getModuleManager().registerCommand(toggle);
             Chunky.getModuleManager().registerCommand(toggleAssistant);
 

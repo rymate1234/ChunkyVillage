@@ -19,24 +19,33 @@ public class Town implements ChunkyCommandExecutor{
             return;
         }
 
-        //Defaults to player's town.
+
         ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(sender.getName());
+        ChunkyTown myTown = ChunkyTownManager.getTown(chunkyPlayer);
+
+        //Defaults to player's town.
+        ChunkyTown chunkyTown = myTown;
 
         //Match Town in param
-        ChunkyTown chunkyTown = ChunkyTownManager.getTown(chunkyPlayer);
-        if(strings.length > 0) {
-            String n = strings[0].toLowerCase();
-            for(ChunkyObject chunkyObject : ChunkyTownManager.getTowns().values()) {
-                if(chunkyObject.getName().toLowerCase().contains(n)) chunkyTown = (ChunkyTown)chunkyObject;}}
+        if(strings.length > 0) chunkyTown = ChunkyTownManager.matchTown(strings[0]);
 
         //Return if no town found.
         if(chunkyTown==null) {
             Language.sendBad(chunkyPlayer, "Town not found.");
-            return;
-        }
+            return;}
 
         //Print info
         sender.sendMessage(ChatColor.GRAY + "|-------------------" + ChatColor.GREEN + "["+ChatColor.GOLD + chunkyTown.getName()+ChatColor.GREEN + "]" + ChatColor.GRAY + "-------------------|");
+
+        //If Other Town
+        if(myTown != null && myTown != chunkyTown) {
+            ChunkyTown.Stance ourStance = myTown.getStance(chunkyTown);
+            ChunkyTown.Stance theirStance = chunkyTown.getStance(myTown);
+            ChunkyTown.Stance effectiveStance = myTown.getEffectiveStance(chunkyTown);
+            sender.sendMessage(String.format(ChatColor.GRAY + "| " + ChatColor.GREEN + "Our Stance: %s"+ ChatColor.GRAY + " | " + ChatColor.GREEN + "Their Stance: %s ",ourStance.toString(), theirStance.toString()));
+            sender.sendMessage(String.format(ChatColor.GRAY + "| " + ChatColor.GREEN + "Effective Stance: %s", effectiveStance.toString()));
+        }
+
         String res = "";
         int i=0;
         for(ChunkyObject chunkyObject : chunkyTown.getResidents()) {
