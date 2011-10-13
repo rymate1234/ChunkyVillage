@@ -26,13 +26,9 @@ public class SetName implements ChunkyCommandExecutor{
             return;
         }
 
-        ChunkyTown chunkyTown = ChunkyTownManager.getTown(chunkyPlayer);
-        if(chunkyTown == null) {
-            Language.sendBad(chunkyPlayer,"You are not part of a town.");
-            return;
-        }
+        ChunkyTown chunkyTown = ChunkyTownManager.isMayor(chunkyPlayer);
 
-        if(!chunkyTown.isAssistantOrMayor(chunkyPlayer)) {
+        if(chunkyTown == null) {
             Language.sendBad(chunkyPlayer,"You do not have the authority to do this.");
             return;
         }
