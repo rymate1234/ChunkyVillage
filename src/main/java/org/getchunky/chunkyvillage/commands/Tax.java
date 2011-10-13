@@ -24,8 +24,7 @@ public class Tax implements ChunkyCommandExecutor{
 
         if(strings.length < 1) {
             Language.sendBad(chunkyPlayer,"You must specify the percentage.");
-            return;
-        }
+            return;}
 
         double percentage = Tools.parseDouble(strings[0]);
 

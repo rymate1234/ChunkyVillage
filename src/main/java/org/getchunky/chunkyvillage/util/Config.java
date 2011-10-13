@@ -21,8 +21,8 @@ public class Config {
         getElectionPercentage();
     }
 
-    public static int getChunkBonusPerPlayer() {
-        return configuration.getInt("settings.town.chunkLimitBonusPerPlayer",4);
+    public static double getChunkBonusPerPlayer() {
+        return configuration.getDouble("settings.town.chunksPerInfluence",0.5);
     }
 
     public static int getStartingChunks() {

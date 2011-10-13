@@ -28,7 +28,7 @@ public class ChunkyEvents extends ChunkyPlayerListener {
 
         if(chunkyTown.isAssistantOrMayor(event.getChunkyPlayer())) {
             if(chunkyTown.claimedChunkCount() >= chunkyTown.maxChunks()) {
-                Language.sendBad(event.getChunkyPlayer(),"You need to have more residents before you can expand.");
+                Language.sendBad(event.getChunkyPlayer(),"The town needs more influence to expand.");
                 return;
             }
             if(!event.getChunkyChunk().isOwned()) {

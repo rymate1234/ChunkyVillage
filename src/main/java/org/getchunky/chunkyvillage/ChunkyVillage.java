@@ -103,8 +103,11 @@ public class ChunkyVillage extends JavaPlugin {
 
             ChunkyCommand toggleAssistant = new ChunkyCommand("assistant",new ToggleAssistant(),toggle).setAliases("a").setDescription("Toggles an assistant.").setHelpLines("/c town toggle assistant <name> or /c t t a <name>");
 
+            ChunkyCommand delete = new ChunkyCommand("delete",new Delete(),town).setAliases("del").setDescription("Deletes town.").setHelpLines("/c town delete or /c t del");
+
             Chunky.getModuleManager().registerCommand(town);
             Chunky.getModuleManager().registerCommand(newTown);
+            Chunky.getModuleManager().registerCommand(delete);
             Chunky.getModuleManager().registerCommand(vote);
             Chunky.getModuleManager().registerCommand(list);
             Chunky.getModuleManager().registerCommand(spawn);

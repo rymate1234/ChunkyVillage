@@ -36,13 +36,13 @@ public class AddResident implements ChunkyCommandExecutor{
             return;
         }
 
-        Player player = Bukkit.getServer().matchPlayer(strings[0]).get(0);
-        if(player == null) {
-            Language.sendBad(chunkyPlayer,"Could not find player: " + strings[0]);
+        ChunkyPlayer resident = ChunkyManager.getChunkyPlayer(strings[0]);
+
+        if(resident==null) {
+            Language.sendBad(chunkyPlayer, "This player does not exist.");
             return;
         }
 
-        ChunkyPlayer resident = ChunkyManager.getChunkyPlayer(player);
         if(ChunkyTownManager.getTown(resident) != null) {
             Language.sendBad(chunkyPlayer,"This player is already part of a town");
             return;

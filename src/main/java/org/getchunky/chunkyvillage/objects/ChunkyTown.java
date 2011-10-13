@@ -171,7 +171,7 @@ public class ChunkyTown extends ChunkyObject {
     }
 
     public int maxChunks() {
-        return getResidents().size() * Config.getChunkBonusPerPlayer() + Config.getStartingChunks();
+        return (int)(getAverageInfluence() * Config.getChunkBonusPerPlayer()) + Config.getStartingChunks();
     }
 
     public int claimedChunkCount() {
@@ -243,13 +243,15 @@ public class ChunkyTown extends ChunkyObject {
         }
     }
 
-    public void delete() {
-        for(HashSet<ChunkyObject> chunkyObjects : this.getOwnables().values()) {
-            for(ChunkyObject chunkyObject : chunkyObjects) {
+    public void deleteTown() {
+        for(HashSet<ChunkyObject> chunkyObjects : ((HashMap<String, HashSet<ChunkyObject>>)(this.getOwnables().clone())).values()) {
+            for(ChunkyObject chunkyObject : (HashSet<ChunkyObject>)chunkyObjects.clone()) {
                 chunkyObject.setOwner(null,true,false);
             }}
+        this.getOwner().getData().remove("mayor");
         this.setOwner(null,false,true);
         save();
+        delete();
     }
 
     public void goodMessageTown(String message) {
@@ -259,8 +261,8 @@ public class ChunkyTown extends ChunkyObject {
         }
     }
 
-    public long getAverageInfluence() {
-        long influence = 0;
+    public int getAverageInfluence() {
+        int influence = 0;
         HashSet<ChunkyObject> residents = getResidents();
         for(ChunkyObject chunkyObject : residents) {
             influence+=ChunkyTownManager.getPlayTime(chunkyObject);}
