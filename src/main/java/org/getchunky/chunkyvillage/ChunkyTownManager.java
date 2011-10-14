@@ -1,6 +1,5 @@
 package org.getchunky.chunkyvillage;
 
-import com.nijikokun.register.payment.Method;
 import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.locale.Language;
