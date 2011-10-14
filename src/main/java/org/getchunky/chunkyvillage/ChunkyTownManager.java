@@ -76,6 +76,7 @@ public class ChunkyTownManager {
     public static ChunkyTown.Stance getStance(ChunkyPlayer a, ChunkyPlayer b) {
         ChunkyTown aTown = getTown(a);
         ChunkyTown bTown = getTown(b);
+        if(aTown == null || bTown == null) return ChunkyTown.Stance.NEUTRAL;
         return aTown.getEffectiveStance(bTown);
     }
 

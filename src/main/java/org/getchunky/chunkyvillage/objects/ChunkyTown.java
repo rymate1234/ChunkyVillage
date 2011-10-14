@@ -318,6 +318,7 @@ public class ChunkyTown extends ChunkyObject {
 
     public Stance getEffectiveStance(ChunkyTown otherTown) {
         if(otherTown == this) return Stance.ALLY;
+        if(otherTown == null) return Stance.NEUTRAL;
         Stance myStance = getStance(otherTown);
         Stance theirStance = otherTown.getStance(this);
         if(myStance.equals(Stance.ENEMY) || theirStance.equals(Stance.ENEMY)) return Stance.ENEMY;
