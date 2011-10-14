@@ -56,7 +56,7 @@ public class ChunkyEvents extends ChunkyPlayerListener {
             for(int z=-1;z<2;z++) {
                 if(x==0 && z==0) continue;
                 ChunkyCoordinates coord = new ChunkyCoordinates(world,X+x,Z+z);
-                ChunkyChunk chunk = ChunkyManager.getChunk(coord);
+                ChunkyChunk chunk = ChunkyManager.getChunkyChunk(coord);
                 if(chunk.isOwned() && chunk.isOwnedBy(chunkyTown)) return true;}}
         return false;
     }
