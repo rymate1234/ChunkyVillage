@@ -310,6 +310,7 @@ public class ChunkyTown extends ChunkyObject {
 
     public Stance getStance(ChunkyTown chunkyTown) {
         if(chunkyTown == this) return Stance.ALLY;
+        if(chunkyTown == null) return Stance.NEUTRAL;
         if(getDiplomacy().has(chunkyTown.getId())) return getStanceFromString(getDiplomacy().getString(chunkyTown.getId()));
         return Stance.NEUTRAL;
     }
