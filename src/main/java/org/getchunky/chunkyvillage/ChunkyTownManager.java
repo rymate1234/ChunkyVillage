@@ -7,6 +7,7 @@ import org.getchunky.chunky.locale.Language;
 import org.getchunky.chunky.object.ChunkyObject;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
+import org.getchunky.register.payment.Method;
 import org.json.JSONException;
 
 import java.util.HashMap;
