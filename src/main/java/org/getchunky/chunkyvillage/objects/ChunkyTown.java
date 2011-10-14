@@ -1,6 +1,5 @@
 package org.getchunky.chunkyvillage.objects;
 
-import com.nijikokun.register.payment.Method;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -12,6 +11,7 @@ import org.getchunky.chunky.object.ChunkyObject;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunkyvillage.ChunkyTownManager;
 import org.getchunky.chunkyvillage.util.Config;
+import org.getchunky.register.payment.Method;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
