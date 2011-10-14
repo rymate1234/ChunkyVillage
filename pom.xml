@@ -48,7 +48,7 @@
         </dependency>
         <dependency>
             <groupId>org.getchunky</groupId>
-            <artifactId>chunky</artifactId>
+            <artifactId>Chunky</artifactId>
             <version>Colombo-SNAPSHOT</version>
         </dependency>
     </dependencies>
