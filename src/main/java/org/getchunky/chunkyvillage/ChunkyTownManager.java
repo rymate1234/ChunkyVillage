@@ -68,5 +68,11 @@ public class ChunkyTownManager {
 
     }
 
+    public static ChunkyTown.Stance getStance(ChunkyPlayer a, ChunkyPlayer b) {
+        ChunkyTown aTown = getTown(a);
+        ChunkyTown bTown = getTown(b);
+        return aTown.getEffectiveStance(bTown);
+    }
+
 
 }

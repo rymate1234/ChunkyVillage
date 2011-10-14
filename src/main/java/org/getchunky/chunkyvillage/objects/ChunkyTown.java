@@ -309,14 +309,16 @@ public class ChunkyTown extends ChunkyObject {
     }
 
     public Stance getStance(ChunkyTown chunkyTown) {
+        if(chunkyTown == this) return Stance.ALLY;
         if(getDiplomacy().has(chunkyTown.getId())) return getStanceFromString(getDiplomacy().getString(chunkyTown.getId()));
         return Stance.NEUTRAL;
     }
 
 
     public Stance getEffectiveStance(ChunkyTown otherTown) {
+        if(otherTown == this) return Stance.ALLY;
         Stance myStance = getStance(otherTown);
-        Stance theirStance = getStance(this);
+        Stance theirStance = otherTown.getStance(this);
         if(myStance.equals(Stance.ENEMY) || theirStance.equals(Stance.ENEMY)) return Stance.ENEMY;
         if(myStance.equals(Stance.ALLY) && theirStance.equals(Stance.ALLY)) return Stance.ALLY;
         return Stance.NEUTRAL;
