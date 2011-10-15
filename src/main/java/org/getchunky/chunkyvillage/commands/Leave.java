@@ -9,6 +9,7 @@ import org.getchunky.chunky.module.ChunkyCommandExecutor;
 import org.getchunky.chunky.object.ChunkyChunk;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunkyvillage.ChunkyTownManager;
+import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
 
 public class Leave implements ChunkyCommandExecutor{
@@ -18,19 +19,19 @@ public class Leave implements ChunkyCommandExecutor{
             return;
         }
         Player player = (Player)sender;
-        ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(player.getName());
-        ChunkyTown chunkyTown = ChunkyTownManager.getTown(chunkyPlayer);
+        ChunkyResident chunkyResident = new ChunkyResident(player);
+        ChunkyTown chunkyTown = chunkyResident.getTown();
         if(chunkyTown == null) {
-            Language.sendBad(chunkyPlayer,"You do not belong to a town.");
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"You do not belong to a town.");
             return;
         }
-        if(chunkyTown.isMayor(chunkyPlayer)) {
-            Language.sendBad(chunkyPlayer, "Please set a new mayor before leaving.");
+        if(chunkyResident.isMayor()) {
+            Language.sendBad(chunkyResident.getChunkyPlayer(), "Please set a new mayor before leaving.");
             return;
         }
 
-        chunkyTown.kickResident(chunkyPlayer);
-        Language.sendGood(chunkyPlayer,"You have left the town.");
-        if(chunkyTown.getResidents().size() ==0 ) chunkyTown.delete();
+        chunkyTown.kickResident(chunkyResident);
+        Language.sendGood(chunkyResident.getChunkyPlayer(),"You have left the town.");
+        if(chunkyTown.getResidents().size() == 0 ) chunkyTown.delete();
     }
 }

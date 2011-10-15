@@ -8,6 +8,7 @@ import org.getchunky.chunky.module.ChunkyCommand;
 import org.getchunky.chunky.module.ChunkyCommandExecutor;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunkyvillage.ChunkyTownManager;
+import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
 
 public class SetName implements ChunkyCommandExecutor{
@@ -19,23 +20,23 @@ public class SetName implements ChunkyCommandExecutor{
             return;
         }
 
-        ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(sender.getName());
+        ChunkyResident chunkyResident = new ChunkyResident(sender);
 
         if(strings.length < 1) {
-            Language.sendBad(chunkyPlayer,"Please specify new name.");
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"Please specify new name.");
             return;
         }
 
-        ChunkyTown chunkyTown = ChunkyTownManager.isMayor(chunkyPlayer);
+        ChunkyTown chunkyTown = chunkyResident.getTown();
 
-        if(chunkyTown == null) {
-            Language.sendBad(chunkyPlayer,"You do not have the authority to do this.");
+        if(!chunkyResident.isMayor()) {
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"You do not have the authority to do this.");
             return;
         }
 
         chunkyTown.setName(strings[0]);
 
-        Language.sendGood(chunkyPlayer,"Town has been renamed to " + strings[0]);
+        Language.sendGood(chunkyResident.getChunkyPlayer(),"Town has been renamed to " + strings[0]);
 
     }
 }

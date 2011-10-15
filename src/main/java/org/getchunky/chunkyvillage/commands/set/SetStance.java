@@ -9,6 +9,7 @@ import org.getchunky.chunky.module.ChunkyCommand;
 import org.getchunky.chunky.module.ChunkyCommandExecutor;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunkyvillage.ChunkyTownManager;
+import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
 
 public class SetStance implements ChunkyCommandExecutor{
@@ -17,20 +18,20 @@ public class SetStance implements ChunkyCommandExecutor{
             Language.IN_GAME_ONLY.bad(sender);
             return;}
 
-        ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(sender.getName());
+        ChunkyResident chunkyResident = new ChunkyResident(sender);
         if(strings.length < 2) {
-            Language.sendBad(chunkyPlayer, "You must specify other town and stance.");
+            Language.sendBad(chunkyResident.getChunkyPlayer(), "You must specify other town and stance.");
             return;}
 
-        ChunkyTown chunkyTown = ChunkyTownManager.isMayor(chunkyPlayer);
-        if(chunkyTown == null) {
-            Language.sendBad(chunkyPlayer,"You do not have the authority to do this");
+        ChunkyTown chunkyTown = chunkyResident.getTown();
+        if(!chunkyResident.isMayor()) {
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"You do not have the authority to do this");
             return;}
 
         ChunkyTown otherTown = ChunkyTownManager.matchTown(strings[0]);
         ChunkyTown.Stance result = chunkyTown.setStance(otherTown, strings[1]);
         if(result == null) {
-            Language.sendBad(chunkyPlayer, "This is already the current stance.");
+            Language.sendBad(chunkyResident.getChunkyPlayer(), "This is already the current stance.");
             return;
         }
 

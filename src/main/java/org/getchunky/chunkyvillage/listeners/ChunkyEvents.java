@@ -10,23 +10,27 @@ import org.getchunky.chunky.locale.Language;
 import org.getchunky.chunky.object.ChunkyChunk;
 import org.getchunky.chunky.object.ChunkyCoordinates;
 import org.getchunky.chunkyvillage.ChunkyTownManager;
+import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
+import org.getchunky.chunkyvillage.objects.TownChunk;
 
 public class ChunkyEvents extends ChunkyPlayerListener {
     @Override
     public void onPlayerChunkClaim(ChunkyPlayerChunkClaimEvent event) {
-        ChunkyTown chunkyTown = ChunkyTownManager.getTown(event.getChunkyPlayer());
+        ChunkyResident chunkyResident = new ChunkyResident(event.getChunkyPlayer());
+        ChunkyTown chunkyTown = chunkyResident.getTown();
+        TownChunk townChunk = new TownChunk(event.getChunkyChunk());
         if(chunkyTown == null) return;
         event.setCancelled(true);
-        if(chunkyTown.isForSale(event.getChunkyChunk())) {
+        if(townChunk.isForSale()) {
             if(event.getChunkyChunk().isDirectlyOwnedBy(event.getChunkyPlayer())) {
                 Language.sendBad(event.getChunkyPlayer(),"You cannot buy your own chunk.");
                 return;
             }
-            chunkyTown.buyChunk(event.getChunkyChunk(),event.getChunkyPlayer());
+            townChunk.buyChunk(chunkyResident);
             return;}
 
-        if(chunkyTown.isAssistantOrMayor(event.getChunkyPlayer())) {
+        if(chunkyResident.isAssistantOrMayor()) {
             if(chunkyTown.claimedChunkCount() >= chunkyTown.maxChunks()) {
                 Language.sendBad(event.getChunkyPlayer(),"The town needs more influence to expand.");
                 return;
@@ -64,9 +68,10 @@ public class ChunkyEvents extends ChunkyPlayerListener {
     @Override
     public void onPlayerChunkChange(ChunkyPlayerChunkChangeEvent event) {
         ChunkyTown chunkyTown = ChunkyTownManager.getTown(event.getChunkyPlayer());
+        TownChunk toChunk = new TownChunk(event.getToChunk());
         if(chunkyTown == null) return;
-        if(chunkyTown.isForSale(event.getToChunk()))
-            event.setMessage(event.getToChunk().getOwner().getName() + " - on sale for: " + ChatColor.YELLOW  + Chunky.getMethod().format(chunkyTown.getCost(event.getToChunk())));
+        if(toChunk.isForSale())
+            event.setMessage(event.getToChunk().getOwner().getName() + " - on sale for: " + ChatColor.YELLOW  + Chunky.getMethod().format(toChunk.getCost()));
     }
 }
 

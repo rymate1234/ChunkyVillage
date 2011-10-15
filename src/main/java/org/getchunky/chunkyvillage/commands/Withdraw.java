@@ -8,6 +8,7 @@ import org.getchunky.chunky.module.ChunkyCommand;
 import org.getchunky.chunky.module.ChunkyCommandExecutor;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunkyvillage.ChunkyTownManager;
+import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
 import org.getchunky.chunkyvillage.util.Tools;
 
@@ -18,26 +19,25 @@ public class Withdraw implements ChunkyCommandExecutor{
             Language.IN_GAME_ONLY.bad(sender);
             return;}
 
-        ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(sender.getName());
+        ChunkyResident chunkyResident = new ChunkyResident(sender);
 
         if(strings.length < 1) {
-            Language.sendBad(chunkyPlayer,"You must specify the amount to withdraw.");
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"You must specify the amount to withdraw.");
             return;
         }
 
         double amount = Tools.parseDouble(strings[0]);
 
         if(amount < 1) {
-            Language.sendBad(chunkyPlayer,"Please specify a proper number.");
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"Please specify a proper number.");
             return;
         }
 
-        ChunkyTown chunkyTown = ChunkyTownManager.getTown(chunkyPlayer);
-
-        if(!chunkyTown.isAssistantOrMayor(chunkyPlayer)) {
-            Language.sendBad(chunkyPlayer,"You do not have the authority to do this");
+        if(!chunkyResident.isAssistantOrMayor()) {
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"You do not have the authority to do this");
             return;}
 
-        chunkyTown.withdraw(chunkyPlayer,amount);
+        ChunkyTown chunkyTown = chunkyResident.getTown();
+        chunkyTown.withdraw(chunkyResident,amount);
     }
 }

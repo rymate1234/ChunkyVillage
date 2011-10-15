@@ -1,6 +1,5 @@
 package org.getchunky.chunkyvillage;
 
-import org.bukkit.entity.Player;
 import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.locale.Language;
@@ -16,10 +15,6 @@ public class ChunkyTownManager {
 
     public static ChunkyTown getTown(String name) {
         return (ChunkyTown)ChunkyManager.getObject(ChunkyTown.class.getName(),name);
-    }
-
-    public static ChunkyTown getTown(Player player) {
-        return getTown(ChunkyManager.getChunkyPlayer(player));
     }
 
     public static ChunkyTown getTown(ChunkyPlayer chunkyPlayer) {
@@ -61,16 +56,6 @@ public class ChunkyTownManager {
 
     public static HashMap<String, ChunkyObject> getTowns() {
         return ChunkyManager.getObjectsOfType(ChunkyTown.class.getName());
-    }
-
-    public static long getPlayTime(ChunkyObject chunkyPlayer) {
-        long curTime = System.currentTimeMillis();
-        long joinTime = curTime;
-        if(chunkyPlayer.getData().has("village-lastJoin")) joinTime = chunkyPlayer.getData().getLong("village-lastJoin");
-        long playTime = 0;
-        if(chunkyPlayer.getData().has("village-playTime")) playTime = chunkyPlayer.getData().getLong("village-playTime");
-        return playTime + (curTime-joinTime)/(1000*60);
-
     }
 
     public static ChunkyTown.Stance getStance(ChunkyPlayer a, ChunkyPlayer b) {

@@ -6,8 +6,10 @@ import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.locale.Language;
 import org.getchunky.chunky.module.ChunkyCommand;
 import org.getchunky.chunky.module.ChunkyCommandExecutor;
+import org.getchunky.chunky.object.ChunkyChunk;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunkyvillage.ChunkyTownManager;
+import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
 
 public class Spawn implements ChunkyCommandExecutor{
@@ -16,15 +18,17 @@ public class Spawn implements ChunkyCommandExecutor{
             Language.IN_GAME_ONLY.bad(sender);
             return;
         }
-        ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(sender.getName());
-        ChunkyTown chunkyTown = ChunkyTownManager.getTown(chunkyPlayer);
+        ChunkyResident chunkyResident = new ChunkyResident(sender);
+        ChunkyTown chunkyTown = chunkyResident.getTown();
         if(chunkyTown == null) {
-            Language.sendBad(chunkyPlayer,"You are not part of a town.");
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"You are not part of a town.");
             return;
         }
 
-        if(chunkyPlayer.getCurrentChunk().isOwned() && !chunkyPlayer.getCurrentChunk().isOwnedBy(chunkyTown) && !chunkyPlayer.getCurrentChunk().isOwnedBy(chunkyPlayer)) {
-            Language.sendBad(chunkyPlayer,"You cannot teleport from other town's land.");
+        ChunkyChunk currentChunk = chunkyResident.getChunkyPlayer().getCurrentChunk();
+
+        if(currentChunk.isOwned() && !currentChunk.isOwnedBy(chunkyTown) && !chunkyResident.owns(currentChunk)) {
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"You cannot teleport from other town's land.");
             return;
         }
 

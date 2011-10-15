@@ -7,6 +7,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunkyvillage.ChunkyTownManager;
+import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
 
 public class PlayerEvents extends PlayerListener{
@@ -22,19 +23,15 @@ public class PlayerEvents extends PlayerListener{
     @Override
     public void onPlayerJoin(PlayerJoinEvent event) {
         //Log join time
-        ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer());
-        chunkyPlayer.getData().put("village-lastJoin",System.currentTimeMillis());
-        chunkyPlayer.save();
+        new ChunkyResident(event.getPlayer()).login();
     }
 
 
     @Override
     public void onPlayerQuit(PlayerQuitEvent event) {
         //Save playtime
-        ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer());
-        chunkyPlayer.getData().put("village-playTime",ChunkyTownManager.getPlayTime(chunkyPlayer));
-        chunkyPlayer.getData().remove("village-lastJoin");
-        chunkyPlayer.save();
+        new ChunkyResident(event.getPlayer()).logout();
+
 
     }
 }

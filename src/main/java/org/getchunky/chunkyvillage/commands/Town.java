@@ -10,9 +10,11 @@ import org.getchunky.chunky.module.ChunkyCommandExecutor;
 import org.getchunky.chunky.object.ChunkyObject;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunkyvillage.ChunkyTownManager;
+import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
 
 public class Town implements ChunkyCommandExecutor{
+
     public void onCommand(CommandSender sender, ChunkyCommand chunkyCommand, String s, String[] strings) {
         if(!(sender instanceof Player)) {
             Language.IN_GAME_ONLY.bad(sender);
@@ -20,8 +22,8 @@ public class Town implements ChunkyCommandExecutor{
         }
 
 
-        ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(sender.getName());
-        ChunkyTown myTown = ChunkyTownManager.getTown(chunkyPlayer);
+        ChunkyResident chunkyResident = new ChunkyResident(sender);
+        ChunkyTown myTown = chunkyResident.getTown();
 
         //Defaults to player's town.
         ChunkyTown chunkyTown = myTown;
@@ -31,7 +33,7 @@ public class Town implements ChunkyCommandExecutor{
 
         //Return if no town found.
         if(chunkyTown==null) {
-            Language.sendBad(chunkyPlayer, "Town not found.");
+            Language.sendBad(chunkyResident.getChunkyPlayer(), "Town not found.");
             return;}
 
         //Print info

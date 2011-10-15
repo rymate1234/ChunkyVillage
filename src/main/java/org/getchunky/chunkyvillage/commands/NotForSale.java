@@ -9,7 +9,9 @@ import org.getchunky.chunky.module.ChunkyCommandExecutor;
 import org.getchunky.chunky.object.ChunkyChunk;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunkyvillage.ChunkyTownManager;
+import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
+import org.getchunky.chunkyvillage.objects.TownChunk;
 import org.getchunky.chunkyvillage.util.Tools;
 
 public class NotForSale implements ChunkyCommandExecutor{
@@ -19,25 +21,25 @@ public class NotForSale implements ChunkyCommandExecutor{
             return;
         }
         Player player = (Player)sender;
-        ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(player.getName());
-        ChunkyChunk chunkyChunk = chunkyPlayer.getCurrentChunk();
-        ChunkyTown chunkyTown = ChunkyTownManager.getTown(chunkyPlayer);
+        ChunkyResident chunkyResident = new ChunkyResident(player.getName());
+        ChunkyChunk chunkyChunk = chunkyResident.getChunkyPlayer().getCurrentChunk();
+        ChunkyTown chunkyTown = chunkyResident.getTown();
         if(chunkyTown == null) {
-            Language.sendBad(chunkyPlayer,"You do not belong to a town.");
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"You do not belong to a town.");
             return;
         }
 
         if(!chunkyTown.isOwnerOf(chunkyChunk)) {
-            Language.sendBad(chunkyPlayer,"This is not town land.");
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"This is not town land.");
             return;
         }
 
-        if(!chunkyPlayer.isOwnerOf(chunkyChunk) && !chunkyTown.isAssistantOrMayor(chunkyPlayer)) {
-            Language.sendBad(chunkyPlayer, "You do not own this land.");
+        if(!chunkyResident.owns(chunkyChunk) && !chunkyResident.isAssistantOrMayor()) {
+            Language.sendBad(chunkyResident.getChunkyPlayer(), "You do not own this land.");
             return;
         }
 
-        chunkyTown.setChunkNotForSale(chunkyChunk);
-        Language.sendGood(chunkyPlayer,"This plot is no longer for sale");
+        new TownChunk(chunkyChunk).setNotForSale();
+        Language.sendGood(chunkyResident.getChunkyPlayer(),"This plot is no longer for sale");
     }
 }

@@ -8,6 +8,7 @@ import org.getchunky.chunky.module.ChunkyCommand;
 import org.getchunky.chunky.module.ChunkyCommandExecutor;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunkyvillage.ChunkyTownManager;
+import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
 import org.getchunky.chunkyvillage.util.Tools;
 
@@ -19,31 +20,31 @@ public class SetMayor implements ChunkyCommandExecutor{
             Language.IN_GAME_ONLY.bad(sender);
             return;}
 
-        ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(sender.getName());
+        ChunkyResident chunkyResident = new ChunkyResident(sender);
 
-        ChunkyTown chunkyTown = ChunkyTownManager.isMayor(chunkyPlayer);
+        ChunkyTown chunkyTown = chunkyResident.getTown();
 
-        if(chunkyTown == null) {
-            Language.sendBad(chunkyPlayer,"You do not have the authority to do this");
+        if(chunkyResident.isMayor()) {
+            Language.sendBad(chunkyResident.getChunkyPlayer(), "You do not have the authority to do this");
             return;}
 
         if(strings.length < 1) {
-            Language.sendBad(chunkyPlayer, "Please specify the new mayor.");
+            Language.sendBad(chunkyResident.getChunkyPlayer(), "Please specify the new mayor.");
             return;
         }
-        ChunkyPlayer newMayor = ChunkyManager.getChunkyPlayer(strings[0]);
+        ChunkyResident newMayor = new ChunkyResident(strings[0]);
 
-        if(newMayor == chunkyPlayer) {
-            Language.sendBad(chunkyPlayer, "You are already the mayor.");
+        if(newMayor.equals(chunkyResident)) {
+            Language.sendBad(chunkyResident.getChunkyPlayer(), "You are already the mayor.");
             return;
         }
 
         if(!chunkyTown.isResident(newMayor)) {
-            Language.sendBad(chunkyPlayer, "This player is not part of your town");
+            Language.sendBad(chunkyResident.getChunkyPlayer(), "This player is not part of your town");
             return;
         }
 
-        if(chunkyTown.isAssistant(newMayor)) chunkyTown.removeAssistant(newMayor);
+        if(chunkyResident.isAssistant()) chunkyTown.removeAssistant(newMayor);
 
         chunkyTown.setMayor(newMayor);
 

@@ -9,6 +9,7 @@ import org.getchunky.chunky.module.ChunkyCommandExecutor;
 import org.getchunky.chunky.object.ChunkyChunk;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunkyvillage.ChunkyTownManager;
+import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
 
 public class NewTown implements ChunkyCommandExecutor{
@@ -23,27 +24,27 @@ public class NewTown implements ChunkyCommandExecutor{
             return;
         }
         Player player = (Player)sender;
-        ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(player.getName());
-        if(ChunkyTownManager.getTown(chunkyPlayer)!=null) {
-            Language.sendBad(chunkyPlayer, "You are already part of a town.");
+        ChunkyResident chunkyResident = new ChunkyResident(player);
+        if(chunkyResident.getTown() != null) {
+            Language.sendBad(chunkyResident.getChunkyPlayer(), "You are already part of a town.");
             return;
         }
         if(strings.length < 1) {
-            Language.sendBad(chunkyPlayer,"Please specify the town name.");
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"Please specify the town name.");
             return;
         }
-        ChunkyChunk chunkyChunk = chunkyPlayer.getCurrentChunk();
+        ChunkyChunk chunkyChunk = chunkyResident.getChunkyPlayer().getCurrentChunk();
         if(chunkyChunk.isOwned()) {
-            Language.sendBad(chunkyPlayer,"This chunk is already owned.");
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"This chunk is already owned.");
             return;
         }
         String id = strings[0];
         ChunkyTown chunkyTown = new ChunkyTown();
         chunkyTown.setId(ChunkyManager.getUniqueId());
-        chunkyTown.setMayor(chunkyPlayer).setHome(chunkyChunk).setName(id);
+        chunkyTown.setMayor(chunkyResident).setHome(chunkyChunk).setName(id);
         chunkyChunk.setOwner(chunkyTown, true,true);
         chunkyChunk.save();
-        Language.sendGood(chunkyPlayer,"You've just created a town called " + chunkyTown.getName());
-        return;
+        Language.sendGood(chunkyResident.getChunkyPlayer(),"You've just created a town called " + chunkyTown.getName());
+
     }
 }

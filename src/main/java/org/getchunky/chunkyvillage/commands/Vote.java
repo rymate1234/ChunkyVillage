@@ -8,6 +8,7 @@ import org.getchunky.chunky.module.ChunkyCommand;
 import org.getchunky.chunky.module.ChunkyCommandExecutor;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunkyvillage.ChunkyTownManager;
+import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
 import org.getchunky.chunkyvillage.util.Config;
 import org.getchunky.chunkyvillage.util.Tools;
@@ -19,27 +20,27 @@ public class Vote implements ChunkyCommandExecutor{
                    Language.IN_GAME_ONLY.bad(sender);
                    return;}
 
-        ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(sender.getName());
-        ChunkyTown chunkyTown = ChunkyTownManager.getTown(chunkyPlayer);
+        ChunkyResident chunkyResident = new ChunkyResident(sender);
+        ChunkyTown chunkyTown = chunkyResident.getTown();
 
         if(chunkyTown == null) {
-            Language.sendBad(chunkyPlayer,"You are not part of a town.");
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"You are not part of a town.");
             return;}
 
         if(strings.length < 1) {
-            chunkyTown.printVotes(chunkyPlayer);
+            chunkyTown.printVotes(chunkyResident);
             return;
         }
 
-        ChunkyPlayer candidate = ChunkyManager.getChunkyPlayer(strings[0]);
+        ChunkyResident candidate = new ChunkyResident(strings[0]);
 
 
         if(!chunkyTown.isResident(candidate)) {
-            Language.sendBad(chunkyPlayer, candidate.getName() + " is not part of your town.");
+            Language.sendBad(chunkyResident.getChunkyPlayer(), candidate.getName() + " is not part of your town.");
             return;}
 
-        int i = chunkyTown.addVote(chunkyPlayer,candidate);
-        chunkyTown.goodMessageTown(chunkyPlayer.getName() + " has voted for " + candidate.getName() + ", " + i + " total votes.");
+        int i = chunkyTown.addVote(chunkyResident,candidate);
+        chunkyTown.goodMessageTown(chunkyResident.getName() + " has voted for " + candidate.getName() + ", " + i + " total votes.");
         if(chunkyTown.getResidents().size() * (Config.getElectionPercentage()/100) <= i) {
             if(!candidate.getName().equals(chunkyTown.getOwner().getName()))chunkyTown.setMayor(candidate);
             chunkyTown.clearVotes();

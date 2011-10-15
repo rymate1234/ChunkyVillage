@@ -9,6 +9,7 @@ import org.getchunky.chunky.module.ChunkyCommand;
 import org.getchunky.chunky.module.ChunkyCommandExecutor;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunkyvillage.ChunkyTownManager;
+import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
 
 public class KickResident implements ChunkyCommandExecutor{
@@ -19,39 +20,39 @@ public class KickResident implements ChunkyCommandExecutor{
             return;
         }
 
-        ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(sender.getName());
+        ChunkyResident chunkyResident = new ChunkyResident(sender);
 
         if(strings.length < 1) {
-            Language.sendBad(chunkyPlayer,"Please specify player to add.");
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"Please specify player to add.");
             return;
         }
 
-        ChunkyTown chunkyTown = ChunkyTownManager.getTown(chunkyPlayer);
+        ChunkyTown chunkyTown = chunkyResident.getTown();
         if(chunkyTown == null) {
-            Language.sendBad(chunkyPlayer,"You are not part of a town.");
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"You are not part of a town.");
             return;
         }
 
-        if(!chunkyTown.isAssistantOrMayor(chunkyPlayer)) {
-            Language.sendBad(chunkyPlayer,"You do not have the authority to do this.");
+        if(!chunkyResident.isAssistantOrMayor()) {
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"You do not have the authority to do this.");
             return;
         }
 
-        ChunkyPlayer resident = ChunkyManager.getChunkyPlayer(strings[0]);
+        ChunkyResident toKick = new ChunkyResident(strings[0]);
 
-        if(chunkyTown.isAssistantOrMayor(resident)) {
-            Language.sendBad(chunkyPlayer,"You may not kick assistants or the mayor.");
+        if(toKick.isAssistantOrMayor()) {
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"You may not kick assistants or the mayor.");
             return;
         }
 
-        if(!chunkyTown.isResident(resident)) {
-            Language.sendBad(chunkyPlayer,"This player is not in your town");
+        if(!chunkyTown.isResident(toKick)) {
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"This player is not in your town");
             return;
         }
 
-        chunkyTown.kickResident(resident);
-        Language.sendBad(chunkyPlayer,resident.getName() + " was kicked from " + chunkyTown.getName());
-        Language.sendGood(resident,"You were kicked from " + chunkyTown.getName());
+        chunkyTown.kickResident(toKick);
+        Language.sendGood(chunkyResident.getChunkyPlayer(),toKick.getName() + " was kicked from " + chunkyTown.getName());
+        Language.sendGood(toKick.getChunkyPlayer(),"You were kicked from " + chunkyTown.getName());
 
 
 

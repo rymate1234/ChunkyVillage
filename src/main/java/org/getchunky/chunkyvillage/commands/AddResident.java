@@ -9,6 +9,7 @@ import org.getchunky.chunky.module.ChunkyCommand;
 import org.getchunky.chunky.module.ChunkyCommandExecutor;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunkyvillage.ChunkyTownManager;
+import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
 
 public class AddResident implements ChunkyCommandExecutor{
@@ -18,39 +19,39 @@ public class AddResident implements ChunkyCommandExecutor{
             return;
         }
 
-        ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(sender.getName());
+        ChunkyResident chunkyResident = new ChunkyResident(sender);
 
         if(strings.length < 1) {
-            Language.sendBad(chunkyPlayer,"Please specify player to add.");
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"Please specify player to add.");
             return;
         }
 
-        ChunkyTown chunkyTown = ChunkyTownManager.getTown(chunkyPlayer);
+        ChunkyTown chunkyTown = chunkyResident.getTown();
         if(chunkyTown == null) {
-            Language.sendBad(chunkyPlayer,"You are not part of a town.");
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"You are not part of a town.");
             return;
         }
 
-        if(!chunkyTown.isAssistantOrMayor(chunkyPlayer)) {
-            Language.sendBad(chunkyPlayer,"You do not have the authority to do this.");
+        if(!chunkyResident.isAssistantOrMayor()) {
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"You do not have the authority to do this.");
             return;
         }
 
-        ChunkyPlayer resident = ChunkyManager.getChunkyPlayer(strings[0]);
+        ChunkyResident newResident = new ChunkyResident(strings[0]);
 
-        if(resident==null) {
-            Language.sendBad(chunkyPlayer, "This player does not exist.");
+        if(newResident.getChunkyPlayer()==null) {
+            Language.sendBad(chunkyResident.getChunkyPlayer(), "This player does not exist.");
             return;
         }
 
-        if(ChunkyTownManager.getTown(resident) != null) {
-            Language.sendBad(chunkyPlayer,"This player is already part of a town");
+        if(newResident.getTown() != null) {
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"This player is already part of a town");
             return;
         }
 
-        chunkyTown.addResident(resident);
-        Language.sendGood(chunkyPlayer,resident.getName() + " added to " + chunkyTown.getName());
-        Language.sendGood(resident,"You were added to town " + chunkyTown.getName());
+        chunkyTown.addResident(newResident);
+        Language.sendGood(chunkyResident.getChunkyPlayer(),newResident.getName() + " added to " + chunkyTown.getName());
+        Language.sendGood(newResident.getChunkyPlayer(),"You were added to town " + chunkyTown.getName());
 
 
 

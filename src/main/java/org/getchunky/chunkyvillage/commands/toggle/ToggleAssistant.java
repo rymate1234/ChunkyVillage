@@ -9,6 +9,7 @@ import org.getchunky.chunky.module.ChunkyCommand;
 import org.getchunky.chunky.module.ChunkyCommandExecutor;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunkyvillage.ChunkyTownManager;
+import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
 
 public class ToggleAssistant implements ChunkyCommandExecutor{
@@ -19,40 +20,40 @@ public class ToggleAssistant implements ChunkyCommandExecutor{
             return;
         }
 
-        ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(sender.getName());
+        ChunkyResident chunkyResident = new ChunkyResident(sender);
 
         if(strings.length < 1) {
-            Language.sendBad(chunkyPlayer,"Please specify player.");
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"Please specify player.");
             return;
         }
 
-        ChunkyTown chunkyTown = ChunkyTownManager.getTown(chunkyPlayer);
+        ChunkyTown chunkyTown = chunkyResident.getTown();
         if(chunkyTown == null) {
-            Language.sendBad(chunkyPlayer,"You are not part of a town.");
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"You are not part of a town.");
             return;
         }
 
-        if(!chunkyTown.isMayor(chunkyPlayer)) {
-            Language.sendBad(chunkyPlayer,"You do not have the authority to do this.");
+        if(!chunkyResident.isMayor()) {
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"You do not have the authority to do this.");
             return;
         }
 
-        ChunkyPlayer assistant = ChunkyManager.getChunkyPlayer(strings[0]);
+        ChunkyResident assistant = new ChunkyResident(strings[0]);
 
         if(!chunkyTown.isResident(assistant)) {
-            Language.sendBad(chunkyPlayer,"This player does not belong to your town.");
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"This player does not belong to your town.");
             return;
         }
 
-        if(chunkyTown.isAssistant(assistant)) {
-            chunkyTown.removeAssistant(chunkyPlayer);
-            Language.sendGood(assistant, ChatColor.RED + "You have been demoted from assistant.");
-            Language.sendMessage(chunkyPlayer, ChatColor.RED + assistant.getName() + " has been demoted from assistant.");
+        if(assistant.isAssistant()) {
+            chunkyTown.removeAssistant(assistant);
+            Language.sendGood(chunkyResident.getChunkyPlayer(), ChatColor.RED + "You have been demoted from assistant.");
+            Language.sendMessage(assistant.getChunkyPlayer(), ChatColor.RED + assistant.getName() + " has been demoted from assistant.");
         }
         else {
             chunkyTown.addAssistant(assistant);
-            Language.sendGood(assistant,"You have been promoted to assistant.");
-            Language.sendGood(chunkyPlayer,assistant.getName() + " has been promoted to assistant.");}
+            Language.sendGood(assistant.getChunkyPlayer(),"You have been promoted to assistant.");
+            Language.sendGood(chunkyResident.getChunkyPlayer(),assistant.getName() + " has been promoted to assistant.");}
 
 
     }

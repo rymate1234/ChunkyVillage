@@ -8,6 +8,7 @@ import org.getchunky.chunky.module.ChunkyCommand;
 import org.getchunky.chunky.module.ChunkyCommandExecutor;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunkyvillage.ChunkyTownManager;
+import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
 
 public class Delete implements ChunkyCommandExecutor{
@@ -15,14 +16,13 @@ public class Delete implements ChunkyCommandExecutor{
          if(!(sender instanceof Player)) {
             Language.IN_GAME_ONLY.bad(sender);
             return;}
-        ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(sender.getName());
+        ChunkyResident chunkyResident = new ChunkyResident(sender);
 
-        ChunkyTown chunkyTown = ChunkyTownManager.isMayor(chunkyPlayer);
-
-        if(chunkyTown==null) {
-            Language.sendBad(chunkyPlayer, "You do not have the authority to do this.");
+        if(!chunkyResident.isMayor()) {
+            Language.sendBad(chunkyResident.getChunkyPlayer(), "You do not have the authority to do this.");
             return;
         }
+        ChunkyTown chunkyTown = chunkyResident.getTown();
 
         chunkyTown.goodMessageTown("The town has been disbanded.");
         chunkyTown.deleteTown();
