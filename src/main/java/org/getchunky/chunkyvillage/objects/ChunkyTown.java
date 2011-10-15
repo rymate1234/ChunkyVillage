@@ -6,10 +6,14 @@ import org.bukkit.entity.Player;
 import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.locale.Language;
+import org.getchunky.chunky.module.ChunkyPermissions;
 import org.getchunky.chunky.object.ChunkyChunk;
+import org.getchunky.chunky.object.ChunkyGroup;
 import org.getchunky.chunky.object.ChunkyObject;
 import org.getchunky.chunky.object.ChunkyPlayer;
+import org.getchunky.chunky.permission.PermissionFlag;
 import org.getchunky.chunkyvillage.ChunkyTownManager;
+import org.getchunky.chunkyvillage.commands.List;
 import org.getchunky.chunkyvillage.util.Config;
 import org.getchunky.register.payment.Method;
 import org.json.JSONArray;
@@ -21,30 +25,46 @@ import java.util.Iterator;
 
 public class ChunkyTown extends ChunkyObject {
 
-    public HashSet<String> getAssistants() {
-        HashSet<String> result = new HashSet<String> ();
-        if(this.getData().has("assistants")) {
-            JSONArray assistants = this.getData().getJSONArray("assistants");
-            for(int i=0;i<assistants.length();i++) {
-                result.add(assistants.getString(i));}}
+    public ChunkyGroup getAssistantGroup() {
+        ChunkyGroup assistants = (ChunkyGroup)ChunkyManager.getObject(ChunkyGroup.class.getName(), getAssistantGroupId());
+        if(assistants == null) {
+            assistants = new ChunkyGroup();
+            assistants.setId(getAssistantGroupId()).setName(getAssistantGroupId());
+            HashMap<PermissionFlag, Boolean> flags = new HashMap<PermissionFlag, Boolean>();
+            flags.put(ChunkyPermissions.BUILD, true);
+            flags.put(ChunkyPermissions.SWITCH, true);
+            flags.put(ChunkyPermissions.DESTROY, true);
+            flags.put(ChunkyPermissions.ITEM_USE, true);
+            ChunkyManager.setPermissions(this, assistants, flags);}
 
-        return result;
+        return assistants;
+    }
+
+    public HashSet<ChunkyObject> getAssistants() {
+        HashSet<ChunkyObject> result = getAssistantGroup().getMembers().get(ChunkyPlayer.class.getName());
+        if(result != null) return result;
+        return new HashSet<ChunkyObject>();
+    }
+
+    private String getAssistantGroupId() {
+        return getId() + "-assistants";
     }
 
     public boolean addAssistant(ChunkyResident chunkyResident) {
-        HashSet<String> assists = getAssistants();
-        boolean result = assists.add(chunkyResident.getName());
-        this.getData().put("assistants",assists);
-        this.save();
-        return result;
+        if(chunkyResident.isAssistant()) return false;
+        ChunkyGroup assistants = getAssistantGroup();
+        assistants.addMember(chunkyResident.getChunkyPlayer());
+        return true;
+    }
+
+    public boolean isAssistant(ChunkyResident chunkyResident) {
+        return getAssistants().contains(chunkyResident.getChunkyPlayer());
     }
 
     public boolean removeAssistant(ChunkyResident chunkyResident) {
-        HashSet<String> assists = getAssistants();
-        boolean result = assists.remove(chunkyResident.getName());
-        this.getData().put("assistants",assists);
-        this.save();
-        return result;
+        if(!isAssistant(chunkyResident)) return false;
+        getAssistantGroup().removeMember(chunkyResident.getChunkyPlayer());
+        return true;
     }
 
     public ChunkyPlayer getMayor() {
@@ -107,7 +127,7 @@ public class ChunkyTown extends ChunkyObject {
     }
 
     public ChunkyTown addResident(ChunkyResident chunkyResident) {
-        chunkyResident.getChunkyPlayer().setOwner(this,false,true);
+        chunkyResident.getChunkyPlayer().setOwner(this, false, true);
         chunkyResident.setPlayTime(0);
         return this;
     }
@@ -195,6 +215,10 @@ public class ChunkyTown extends ChunkyObject {
     public void deleteTown() {
         for(HashSet<ChunkyObject> chunkyObjects : ((HashMap<String, HashSet<ChunkyObject>>)(this.getOwnables().clone())).values()) {
             for(ChunkyObject chunkyObject : (HashSet<ChunkyObject>)chunkyObjects.clone()) {
+                if(chunkyObject instanceof ChunkyGroup) {
+                    chunkyObject.delete();
+                    continue;
+                }
                 chunkyObject.setOwner(null,true,false);
             }}
         this.getOwner().getData().remove("mayor");

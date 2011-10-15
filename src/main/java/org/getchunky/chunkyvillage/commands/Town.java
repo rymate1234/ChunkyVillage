@@ -59,8 +59,8 @@ public class Town implements ChunkyCommandExecutor{
 
         String ass = "";
         int a=0;
-        for(String player : chunkyTown.getAssistants()) {
-            ass += ChatColor.BLUE + player + ChatColor.GRAY + ", ";
+        for(ChunkyObject chunkyObject : chunkyTown.getAssistants()) {
+            ass += ChatColor.BLUE + chunkyObject.getName() + ChatColor.GRAY + ", ";
             i++;
             if(i>40) break;
         }

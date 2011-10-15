@@ -1,5 +1,6 @@
 package org.getchunky.chunkyvillage;
 
+import org.bukkit.entity.Player;
 import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.locale.Language;
@@ -15,6 +16,10 @@ public class ChunkyTownManager {
 
     public static ChunkyTown getTown(String name) {
         return (ChunkyTown)ChunkyManager.getObject(ChunkyTown.class.getName(),name);
+    }
+
+    public static ChunkyTown getTown(Player player) {
+        return getTown(ChunkyManager.getChunkyPlayer(player));
     }
 
     public static ChunkyTown getTown(ChunkyPlayer chunkyPlayer) {

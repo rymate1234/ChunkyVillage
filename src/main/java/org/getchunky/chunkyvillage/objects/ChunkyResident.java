@@ -76,7 +76,8 @@ public class ChunkyResident {
 
     public boolean isAssistant() {
         ChunkyTown chunkyTown = getTown();
-        return chunkyTown.getAssistants().contains(chunkyPlayer.getName());
+        if(chunkyTown == null) return false;
+        return chunkyTown.isAssistant(this);
     }
 
     public boolean isAssistantOrMayor() {
