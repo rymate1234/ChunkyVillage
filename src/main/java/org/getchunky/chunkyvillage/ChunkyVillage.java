@@ -5,6 +5,7 @@ import org.bukkit.event.Event;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkitstats.CallHome;
 import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.event.ChunkyEvent;
 import org.getchunky.chunky.exceptions.ChunkyUnregisteredException;
@@ -42,6 +43,8 @@ public class ChunkyVillage extends JavaPlugin {
 
     public void onEnable() {
         plugin = this;
+
+        CallHome.load(this);
 
         Config.load();
 
