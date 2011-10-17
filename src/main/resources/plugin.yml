@@ -10,6 +10,7 @@ depend: [Chunky]
 commands:
     town:
         description: The root command for town stuff.
+        aliases: c
 permissions:
     chunky.town.create:
         description: Create new towns.

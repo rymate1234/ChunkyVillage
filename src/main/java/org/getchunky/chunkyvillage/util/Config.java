@@ -3,9 +3,39 @@ package org.getchunky.chunkyvillage.util;
 import org.bukkit.util.config.Configuration;
 import org.getchunky.chunkyvillage.ChunkyVillage;
 
+import javax.swing.text.html.Option;
+
 public class Config {
 
     private static Configuration configuration;
+
+    public enum Options {
+
+        CHUNKS_PER_INFLUENCE("settings.town.chunksPerInfluence", 0.5),
+        BASE_CHUNKS("settings.town.baseChunks", 10),
+        ELECTION_PERCENTAGE("settings.town.electionPercentage", 50),
+        DEATH_TOLL("settings.resident.influenceLostOnDeath", 10),
+        ;
+
+        private String path;
+        private Object def;
+
+        Options(String path, Object def) {
+            this.path = path;
+            this.def = def;
+        }
+
+        public String getString() {
+            return configuration.getString(path, def.toString());}
+
+        public int getInt() {
+            return configuration.getInt(path, (Integer)def);}
+
+        public double getDouble() {
+            return configuration.getDouble(path, (Double)def);}
+
+
+    }
 
     public static void load() {
         if(!ChunkyVillage.getInstance().getDataFolder().exists()) ChunkyVillage.getInstance().getDataFolder().mkdir();
@@ -16,21 +46,8 @@ public class Config {
     }
 
     private static void loadDefaults() {
-        getChunkBonusPerPlayer();
-        getStartingChunks();
-        getElectionPercentage();
-    }
-
-    public static double getChunkBonusPerPlayer() {
-        return configuration.getDouble("settings.town.chunksPerInfluence",0.5);
-    }
-
-    public static int getStartingChunks() {
-        return configuration.getInt("settings.town.startingChunkLimit",10);
-    }
-
-    public static double getElectionPercentage() {
-        return configuration.getInt("settings.town.electionPercentage",51);
+        for(Options option : Options.values()) {
+            option.getString();}
     }
 
 

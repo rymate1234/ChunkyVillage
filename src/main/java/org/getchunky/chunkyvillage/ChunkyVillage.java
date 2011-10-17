@@ -74,7 +74,7 @@ public class ChunkyVillage extends JavaPlugin {
     private void registerChunkyCommands(){
         ChunkyCommand root = Chunky.getModuleManager().getCommandByName("chunky");
         try {
-            ChunkyCommand town = new ChunkyCommand("town",new Town(),root).setAliases("t").setHelpLines("/chunky town or /c t").setDescription("Shows information about town");
+            ChunkyCommand town = new ChunkyCommand("town",new Town(),null).setAliases("t").setHelpLines("/chunky town or /c t").setDescription("Shows information about town");
 
             ChunkyCommand list = new ChunkyCommand("list",new List(),town).setAliases("l").setHelpLines("/c town list or /c t l").setDescription("Lists towns.");
 

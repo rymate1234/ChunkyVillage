@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 
+import static org.getchunky.chunkyvillage.util.Config.Options;
+
 public class ChunkyTown extends ChunkyObject {
 
     public ChunkyGroup getAssistantGroup() {
@@ -138,7 +140,7 @@ public class ChunkyTown extends ChunkyObject {
     }
 
     public int maxChunks() {
-        return (int)(getAverageInfluence() * Config.getChunkBonusPerPlayer()) + Config.getStartingChunks();
+        return (int)(getAverageInfluence() * Options.CHUNKS_PER_INFLUENCE.getDouble()) + Options.BASE_CHUNKS.getInt();
     }
 
     public int claimedChunkCount() {

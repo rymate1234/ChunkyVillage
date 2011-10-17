@@ -41,7 +41,7 @@ public class Vote implements ChunkyCommandExecutor{
 
         int i = chunkyTown.addVote(chunkyResident,candidate);
         chunkyTown.goodMessageTown(chunkyResident.getName() + " has voted for " + candidate.getName() + ", " + i + " total votes.");
-        if(chunkyTown.getResidents().size() * (Config.getElectionPercentage()/100) <= i) {
+        if(chunkyTown.getResidents().size() * (Config.Options.ELECTION_PERCENTAGE.getDouble()/100) <= i) {
             if(!candidate.getName().equals(chunkyTown.getOwner().getName()))chunkyTown.setMayor(candidate);
             chunkyTown.clearVotes();
             chunkyTown.save();
