@@ -103,6 +103,10 @@ public class ChunkyResident {
         return chunkyPlayer.isOwnerOf(chunkyObject);
     }
 
+    public ChunkyTown.Stance getEffectiveStance(ChunkyResident chunkyResident) {
+        return ChunkyTownManager.getStance(this.getChunkyPlayer(), chunkyResident.getChunkyPlayer());
+    }
+
     @Override
     public boolean equals(Object obj) {
         return obj instanceof ChunkyResident && ((ChunkyResident) obj).getName().equals(getName());

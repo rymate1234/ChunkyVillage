@@ -10,19 +10,21 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 
 public class Updater {
     private static Plugin plugin;
 
-    public static Boolean updateCheck(String address, String file){
+    public static Boolean updateCheck(String address){
         URLConnection conn = null;
         try {
             Plugin plugin = ChunkyVillage.getInstance();
             URL url = new URL (address);
             conn = url.openConnection();
-            File localfile = new File("plugins",file);
+            File localfile = new File((Updater.class.getProtectionDomain().getCodeSource().getLocation().toURI()));
+            System.out.println(localfile.toPath());
             long lastmodifiedurl = conn.getLastModified();
             long lastmodifiedfile = localfile.lastModified();
             if (lastmodifiedurl > lastmodifiedfile){
@@ -36,6 +38,8 @@ public class Updater {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
             e.printStackTrace();
         }
         plugin.getServer().notify();

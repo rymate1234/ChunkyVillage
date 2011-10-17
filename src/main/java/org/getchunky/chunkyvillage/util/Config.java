@@ -1,13 +1,16 @@
 package org.getchunky.chunkyvillage.util;
 
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.util.config.Configuration;
 import org.getchunky.chunkyvillage.ChunkyVillage;
 
 import javax.swing.text.html.Option;
+import java.io.File;
 
 public class Config {
 
     private static Configuration configuration;
+    private static YamlConfiguration yml;
 
     public enum Options {
 
