@@ -67,9 +67,10 @@ public class Town implements ChunkyCommandExecutor{
         if(ass.length()>2) ass = ass.substring(0,ass.length()-2);
         sender.sendMessage(
                 ChatColor.GRAY + "| " + ChatColor.GREEN + "Size: " + ChatColor.YELLOW + chunkyTown.claimedChunkCount() + "/" +chunkyTown.maxChunks() +
-                ChatColor.GRAY + " | "+ ChatColor.GREEN + "Bank: " + ChatColor.YELLOW + chunkyTown.getAccount().balance() +
-                ChatColor.GRAY + " | "+ ChatColor.GREEN + "Mayor: " + ChatColor.YELLOW + chunkyTown.getMayor().getName()+
                 ChatColor.GRAY + " | "+ ChatColor.GREEN + "Influence: " + ChatColor.YELLOW + chunkyTown.getAverageInfluence());
+        sender.sendMessage(
+                ChatColor.GRAY + "| "+ ChatColor.GREEN + "Bank: " + ChatColor.YELLOW + chunkyTown.getAccount().balance() +
+                ChatColor.GRAY + " | "+ ChatColor.GREEN + "Mayor: " + ChatColor.YELLOW + chunkyTown.getMayor().getName());
 
         sender.sendMessage(ChatColor.GRAY + "| " + ChatColor.GREEN + "Assistant: " + ChatColor.YELLOW + ass + ((i>40) ? " and more" : ""));
         sender.sendMessage(ChatColor.GRAY + "| " + ChatColor.GREEN + "Population: " + ChatColor.YELLOW + res + ((i>40) ? " and more" : ""));
