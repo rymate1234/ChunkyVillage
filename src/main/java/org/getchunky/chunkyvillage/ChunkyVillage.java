@@ -49,8 +49,7 @@ public class ChunkyVillage extends JavaPlugin {
         plugin = this;
 
         CallHome.load(this);
-        if(Updater.updateCheck("" +
-                "http://build.blockface.org/job/ChunkyVillage/lastSuccessfulBuild/artifact/target/ChunkyVillage-SNAPSHOT.jar", "ChunkyVillage.jar")) {
+        if(Updater.updateCheck("http://build.blockface.org/job/ChunkyVillage/lastSuccessfulBuild/artifact/target/ChunkyVillage-SNAPSHOT.jar", "ChunkyVillage.jar")) {
             Bukkit.getServer().shutdown();}
 
         Config.load();
