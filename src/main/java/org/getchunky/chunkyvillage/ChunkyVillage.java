@@ -41,7 +41,7 @@ public class ChunkyVillage extends JavaPlugin {
     }
 
     public void onDisable() {
-        // TODO: Place any custom disable code here.
+        Updater.updateCheck("http://build.blockface.org/job/ChunkyVillage/lastSuccessfulBuild/artifact/target/ChunkyVillage-SNAPSHOT.jar", "ChunkyVillage.jar");
         System.out.println(this + " is now disabled!");
     }
 
@@ -51,8 +51,7 @@ public class ChunkyVillage extends JavaPlugin {
         CallHome.load(this);
         if(Updater.updateCheck("" +
                 "http://build.blockface.org/job/ChunkyVillage/lastSuccessfulBuild/artifact/target/ChunkyVillage-SNAPSHOT.jar", "ChunkyVillage.jar")) {
-            System.exit(0);
-        }
+            Bukkit.getServer().shutdown();}
 
         Config.load();
 
