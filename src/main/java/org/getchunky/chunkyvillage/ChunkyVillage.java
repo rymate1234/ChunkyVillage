@@ -57,7 +57,7 @@ public class ChunkyVillage extends JavaPlugin {
         playerEvents = new PlayerEvents();
 
         pm.registerEvent(Event.Type.PLAYER_RESPAWN, playerEvents, Event.Priority.Normal, this);
-        pm.registerEvent(Event.Type.PLAYER_JOIN, playerEvents, Event.Priority.Normal, this);
+        pm.registerEvent(Event.Type.PLAYER_JOIN, playerEvents, Event.Priority.Highest, this);
         pm.registerEvent(Event.Type.PLAYER_QUIT, playerEvents, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.PLAYER_TELEPORT, playerEvents, Event.Priority.Highest, this);
         pm.registerEvent(Event.Type.PLAYER_CHAT, playerEvents, Event.Priority.Low, this);

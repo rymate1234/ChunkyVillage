@@ -78,7 +78,7 @@ public class ChunkyResident {
 
     public void applyTitle() {
         if(!hasTitle()) return;
-        try {chunkyPlayer.getPlayer().setDisplayName(getTitle() + chunkyPlayer.getName());
+        try {chunkyPlayer.getPlayer().setDisplayName(getTitle() + " " + chunkyPlayer.getName());
         } catch (ChunkyPlayerOfflineException e) {}}
 
     public void removeTitle() {
@@ -94,7 +94,7 @@ public class ChunkyResident {
 
     public boolean isMayor() {
         ChunkyTown chunkyTown = getTown();
-        return chunkyTown != null && chunkyTown.getMayor() != this;
+        return chunkyTown != null && !chunkyTown.getMayor().equals(this);
     }
 
     public boolean isAssistant() {

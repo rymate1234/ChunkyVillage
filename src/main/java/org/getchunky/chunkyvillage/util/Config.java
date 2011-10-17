@@ -15,8 +15,8 @@ public class Config {
         ELECTION_PERCENTAGE("settings.town.electionPercentage", 50),
         DEATH_TOLL("settings.resident.influenceLostOnDeath", 10),
         TOWN_CHAT_FORMAT("settings.town.townChatFormat", "&3[%town%]&f %displayname%: &3%msg%"),
-        MAYOR_TITLE("settings.town.defaultMayorTitle", "&6Mayor &f"),
-        ASSISTANT_TITLE("settings.town.defaultAssistantTitle", "&5Assistant &f")
+        MAYOR_TITLE("settings.town.defaultMayorTitle", "&6Mayor&f"),
+        ASSISTANT_TITLE("settings.town.defaultAssistantTitle", "&5Assistant&f")
         ;
 
         private String path;

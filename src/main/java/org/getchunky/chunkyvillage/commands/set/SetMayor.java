@@ -24,7 +24,7 @@ public class SetMayor implements ChunkyCommandExecutor{
 
         ChunkyTown chunkyTown = chunkyResident.getTown();
 
-        if(chunkyResident.isMayor()) {
+        if(!chunkyResident.isMayor()) {
             Language.sendBad(chunkyResident.getChunkyPlayer(), "You do not have the authority to do this");
             return;}
 
