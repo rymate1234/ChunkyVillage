@@ -56,6 +56,7 @@ public class ChunkyTown extends ChunkyObject {
         if(chunkyResident.isAssistant()) return false;
         ChunkyGroup assistants = getAssistantGroup();
         assistants.addMember(chunkyResident.getChunkyPlayer());
+        chunkyResident.setTitle(Options.ASSISTANT_TITLE.getString());
         return true;
     }
 
@@ -66,20 +67,23 @@ public class ChunkyTown extends ChunkyObject {
     public boolean removeAssistant(ChunkyResident chunkyResident) {
         if(!isAssistant(chunkyResident)) return false;
         getAssistantGroup().removeMember(chunkyResident.getChunkyPlayer());
+        chunkyResident.removeTitle();
         return true;
     }
 
-    public ChunkyPlayer getMayor() {
-        return (ChunkyPlayer)this.getOwner();
+    public ChunkyResident getMayor() {
+        return new ChunkyResident(this.getOwner());
     }
 
     public ChunkyTown setMayor(ChunkyResident mayor) {
         ChunkyObject oldOwner = this.getOwner();
         this.setOwner(mayor.getChunkyPlayer(), true, false);
         if(oldOwner!=null) {
-            oldOwner.setOwner(this,true,false);
+            oldOwner.getData().remove("village-title");
+            oldOwner.setOwner(this, true, false);
             oldOwner.getData().remove("mayor");}
         mayor.getData().put("mayor",this.getId());
+        mayor.setTitle(Options.MAYOR_TITLE.getString());
         mayor.save();
         return this;
     }
@@ -100,7 +104,7 @@ public class ChunkyTown extends ChunkyObject {
     public HashSet<ChunkyObject> getResidents() {
         HashSet<ChunkyObject> ret = new HashSet<ChunkyObject>();
         if(this.getOwnables().get(ChunkyPlayer.class.getName())!=null) ret.addAll(this.getOwnables().get(ChunkyPlayer.class.getName()));
-        ret.add(getMayor());
+        ret.add(getMayor().getChunkyPlayer());
         return ret;
     }
 
@@ -125,6 +129,7 @@ public class ChunkyTown extends ChunkyObject {
     }
 
     public boolean isResident(ChunkyResident player) {
+        if(player.getChunkyPlayer() == null) return false;
         return getResidents().contains(player.getChunkyPlayer());
     }
 
@@ -136,6 +141,7 @@ public class ChunkyTown extends ChunkyObject {
 
     public ChunkyTown kickResident(ChunkyResident chunkyResident) {
         chunkyResident.getChunkyPlayer().setOwner(null, false, true);
+        chunkyResident.removeTitle();
         return this;
     }
 

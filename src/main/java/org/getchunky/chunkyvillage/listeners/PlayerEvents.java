@@ -21,7 +21,11 @@ public class PlayerEvents extends PlayerListener{
     @Override
     public void onPlayerJoin(PlayerJoinEvent event) {
         //Log join time
-        new ChunkyResident(event.getPlayer()).login();
+        ChunkyResident chunkyResident = new ChunkyResident(event.getPlayer());
+        chunkyResident.login();
+
+        //Apply title
+        chunkyResident.applyTitle();
     }
 
 

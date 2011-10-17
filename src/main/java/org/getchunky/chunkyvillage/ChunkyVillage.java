@@ -1,7 +1,6 @@
 package org.getchunky.chunkyvillage;
 
 import org.bukkit.Bukkit;
-import org.bukkit.event.*;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
@@ -13,10 +12,7 @@ import org.getchunky.chunky.exceptions.ChunkyUnregisteredException;
 import org.getchunky.chunky.module.ChunkyCommand;
 import org.getchunky.chunkyvillage.commands.*;
 import org.getchunky.chunkyvillage.commands.List;
-import org.getchunky.chunkyvillage.commands.set.Set;
-import org.getchunky.chunkyvillage.commands.set.SetMayor;
-import org.getchunky.chunkyvillage.commands.set.SetName;
-import org.getchunky.chunkyvillage.commands.set.SetStance;
+import org.getchunky.chunkyvillage.commands.set.*;
 import org.getchunky.chunkyvillage.commands.toggle.Toggle;
 import org.getchunky.chunkyvillage.commands.toggle.ToggleAssistant;
 import org.getchunky.chunkyvillage.commands.toggle.ToggleTownChat;
@@ -59,6 +55,7 @@ public class ChunkyVillage extends JavaPlugin {
         PluginManager pm = this.getServer().getPluginManager();
 
         playerEvents = new PlayerEvents();
+
         pm.registerEvent(Event.Type.PLAYER_RESPAWN, playerEvents, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.PLAYER_JOIN, playerEvents, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.PLAYER_QUIT, playerEvents, Event.Priority.Normal, this);
@@ -71,6 +68,7 @@ public class ChunkyVillage extends JavaPlugin {
 
         System.out.println(this + " is now enabled!");
     }
+
 
     private void registerChunkyCommands(){
         ChunkyCommand root = Chunky.getModuleManager().getCommandByName("chunky");
@@ -101,13 +99,15 @@ public class ChunkyVillage extends JavaPlugin {
 
             ChunkyCommand deposit = new ChunkyCommand("deposit",new Deposit(),town).setAliases("d").setDescription("Deposit money into town bank.").setHelpLines("/town deposit <amount> or /t d <amount>");
 
-            ChunkyCommand set = new ChunkyCommand("set",new Set(),town).setAliases("s").setDescription("Set various options.").setHelpLines("/town set ? or /t s ?");
+            ChunkyCommand set = new ChunkyCommand("set",new Set(),town).setAliases("st").setDescription("Set various options.").setHelpLines("/town set ? or /t s ?");
 
-            ChunkyCommand setName = new ChunkyCommand("name",new SetName(),set).setAliases("n").setDescription("Set town name.").setHelpLines("/town set name <name> or /t s n <name>");
+            ChunkyCommand setName = new ChunkyCommand("name",new SetName(),set).setAliases("n").setDescription("Set town name.").setHelpLines("/town set name <name> or /t st n <name>");
 
-            ChunkyCommand setMayor = new ChunkyCommand("mayor",new SetMayor(),set).setAliases("m").setDescription("Set town mayor.").setHelpLines("/town set mayor <name> or /t s m <name>");
+            ChunkyCommand setMayor = new ChunkyCommand("mayor",new SetMayor(),set).setAliases("m").setDescription("Set town mayor.").setHelpLines("/town set mayor <name> or /t st m <name>");
 
-            ChunkyCommand setStance = new ChunkyCommand("stance",new SetStance(),set).setAliases("s").setDescription("Set town's stance.").setHelpLines("/town set stace <name> <neutral|enemy|ally> or /t s s <neutral|enemy|ally>");
+            ChunkyCommand setStance = new ChunkyCommand("stance",new SetStance(),set).setAliases("s").setDescription("Set town's stance.").setHelpLines("/town set stace <name> <neutral|enemy|ally> or /t st s <neutral|enemy|ally>");
+
+            ChunkyCommand setTitle = new ChunkyCommand("title",new SetTitle(),set).setAliases("t").setDescription("Set a resident's or your own title.").setHelpLines("/town set title [name] <title> or /t st t [name] <title>");
 
             ChunkyCommand toggle = new ChunkyCommand("toggle",new Toggle(),town).setAliases("t").setDescription("Toggle various options.").setHelpLines("/town toggle ? or /t t ?");
 
@@ -135,6 +135,7 @@ public class ChunkyVillage extends JavaPlugin {
             Chunky.getModuleManager().registerCommand(setName);
             Chunky.getModuleManager().registerCommand(setMayor);
             Chunky.getModuleManager().registerCommand(setStance);
+            Chunky.getModuleManager().registerCommand(setTitle);
             Chunky.getModuleManager().registerCommand(toggle);
             Chunky.getModuleManager().registerCommand(toggleAssistant);
             Chunky.getModuleManager().registerCommand(toggleTownChat);

@@ -3,10 +3,12 @@ package org.getchunky.chunkyvillage;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.getchunky.chunky.exceptions.ChunkyPlayerOfflineException;
 import org.getchunky.chunky.locale.Language;
 import org.getchunky.chunky.object.ChunkyObject;
 import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
+import org.getchunky.chunkyvillage.util.Config;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -48,13 +50,25 @@ public class ChatManager {
         ChunkyResident sender = new ChunkyResident(player);
 
         if(chatMode == ChatMode.TOWN_CHAT) {
-            String formatted = ChatColor.AQUA + "[Town] " + ChatColor.WHITE + player.getDisplayName() + ": " + ChatColor.AQUA + message;
+            String formatted = formatChat(sender, message, chatMode);
             ChunkyTown chunkyTown = sender.getTown();
             for(Player p : Bukkit.getServer().getOnlinePlayers()) {
                 if(!chunkyTown.isResident(new ChunkyResident(p))) continue;
                 p.sendMessage(formatted);}}
 
         return true;
+    }
+
+    public static String formatChat(ChunkyResident sender, String message, ChatMode chatMode) {
+        String filter = "";
+        Player player;
+        try {player = sender.getChunkyPlayer().getPlayer();} catch (ChunkyPlayerOfflineException e) {return "";}
+        if(chatMode == ChatMode.TOWN_CHAT) filter = Config.Options.TOWN_CHAT_FORMAT.getString();
+        return filter
+                .replace("%town%", sender.getTown().getName())
+                .replace("%displayname%", player.getDisplayName())
+                .replace("%name%", player.getName())
+                .replace("%msg%", message);
     }
 
 }

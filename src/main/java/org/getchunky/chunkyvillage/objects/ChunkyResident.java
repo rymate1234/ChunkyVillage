@@ -4,6 +4,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.ChunkyManager;
+import org.getchunky.chunky.exceptions.ChunkyPlayerOfflineException;
 import org.getchunky.chunky.object.ChunkyObject;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunkyvillage.ChunkyTownManager;
@@ -69,9 +70,31 @@ public class ChunkyResident {
 
     }
 
+    public void setTitle(String title) {
+        chunkyPlayer.getData().put("village-title", title);
+        chunkyPlayer.save();
+        applyTitle();
+    }
+
+    public void applyTitle() {
+        if(!hasTitle()) return;
+        try {chunkyPlayer.getPlayer().setDisplayName(getTitle() + chunkyPlayer.getName());
+        } catch (ChunkyPlayerOfflineException e) {}}
+
+    public void removeTitle() {
+        chunkyPlayer.getData().remove("village-title");
+    }
+
+    public boolean hasTitle() {
+        return chunkyPlayer.getData().has("village-title");
+    }
+
+    public String getTitle() {
+        return chunkyPlayer.getData().getString("village-title");}
+
     public boolean isMayor() {
         ChunkyTown chunkyTown = getTown();
-        return chunkyTown != null && chunkyTown.getMayor() == this.chunkyPlayer;
+        return chunkyTown != null && chunkyTown.getMayor() != this;
     }
 
     public boolean isAssistant() {
