@@ -6,6 +6,7 @@ name: ChunkyVillage
 startup: postworld
 url: http://getchunky.org/
 version: ${build.number}
+depend: [Chunky]
 commands:
     town:
         description: The root command for town stuff.
