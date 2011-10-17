@@ -11,7 +11,6 @@ import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.event.ChunkyEvent;
 import org.getchunky.chunky.exceptions.ChunkyUnregisteredException;
 import org.getchunky.chunky.module.ChunkyCommand;
-import org.getchunky.chunky.util.Logging;
 import org.getchunky.chunkyvillage.commands.*;
 import org.getchunky.chunkyvillage.commands.List;
 import org.getchunky.chunkyvillage.commands.set.Set;
@@ -25,9 +24,6 @@ import org.getchunky.chunkyvillage.listeners.ChunkyEvents;
 import org.getchunky.chunkyvillage.listeners.PlayerEvents;
 import org.getchunky.chunkyvillage.util.Config;
 import org.getchunky.chunkyvillage.util.Updater;
-
-import java.awt.*;
-import java.util.Arrays;
 
 public class ChunkyVillage extends JavaPlugin {
 
@@ -113,7 +109,7 @@ public class ChunkyVillage extends JavaPlugin {
 
             ChunkyCommand setStance = new ChunkyCommand("stance",new SetStance(),set).setAliases("s").setDescription("Set town's stance.").setHelpLines("/town set stace <name> <neutral|enemy|ally> or /t s s <neutral|enemy|ally>");
 
-            ChunkyCommand toggle = new ChunkyCommand("toggle",new Set(),town).setAliases("t").setDescription("Toggle various options.").setHelpLines("/town toggle ? or /t t ?");
+            ChunkyCommand toggle = new ChunkyCommand("toggle",new Toggle(),town).setAliases("t").setDescription("Toggle various options.").setHelpLines("/town toggle ? or /t t ?");
 
             ChunkyCommand toggleAssistant = new ChunkyCommand("assistant",new ToggleAssistant(),toggle).setAliases("a").setDescription("Toggles an assistant.").setHelpLines("/town toggle assistant <name> or /t t a <name>");
 
