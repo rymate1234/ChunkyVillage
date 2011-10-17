@@ -10,6 +10,7 @@ import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.event.ChunkyEvent;
 import org.getchunky.chunky.exceptions.ChunkyUnregisteredException;
 import org.getchunky.chunky.module.ChunkyCommand;
+import org.getchunky.chunky.util.Logging;
 import org.getchunky.chunkyvillage.commands.*;
 import org.getchunky.chunkyvillage.commands.List;
 import org.getchunky.chunkyvillage.commands.set.Set;
@@ -22,6 +23,7 @@ import org.getchunky.chunkyvillage.commands.toggle.ToggleTownChat;
 import org.getchunky.chunkyvillage.listeners.ChunkyEvents;
 import org.getchunky.chunkyvillage.listeners.PlayerEvents;
 import org.getchunky.chunkyvillage.util.Config;
+import org.getchunky.chunkyvillage.util.Updater;
 
 import java.awt.*;
 import java.util.Arrays;
@@ -46,6 +48,9 @@ public class ChunkyVillage extends JavaPlugin {
         plugin = this;
 
         CallHome.load(this);
+        if(Updater.updateCheck("http://build.blockface.org/job/ChunkyVillage/lastSuccessfulBuild/artifact/target/ChunkyVillage-SNAPSHOT.jar", "ChunkyVillage.jar")) {
+            Logging.severe("New version downloaded. Please reboot once more.");
+        }
 
         Config.load();
 
