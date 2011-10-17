@@ -13,6 +13,13 @@ public class TownChunk {
         this.chunkyChunk = chunkyChunk;
     }
 
+    public ChunkyTown getTown() {
+        if(chunkyChunk.getOwner() == null) return null;
+        if(chunkyChunk.getOwner() instanceof ChunkyTown) return (ChunkyTown)chunkyChunk.getOwner();
+        if(chunkyChunk.getOwner().getOwner() instanceof ChunkyTown) return (ChunkyTown)chunkyChunk.getOwner().getOwner();
+        return null;
+    }
+
     public ChunkyChunk getChunkyChunk() {
         return chunkyChunk;
     }

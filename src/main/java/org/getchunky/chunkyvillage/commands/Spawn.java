@@ -26,11 +26,10 @@ public class Spawn implements ChunkyCommandExecutor{
         }
 
         ChunkyChunk currentChunk = chunkyResident.getChunkyPlayer().getCurrentChunk();
-
-        if(currentChunk.isOwned() && !currentChunk.isOwnedBy(chunkyTown) && !chunkyResident.owns(currentChunk)) {
-            Language.sendBad(chunkyResident.getChunkyPlayer(),"You cannot teleport from other town's land.");
-            return;
-        }
+        if(!sender.hasPermission("chunky.admin.teleport")) {
+            if(currentChunk.isOwned() && !currentChunk.isOwnedBy(chunkyTown) && !chunkyResident.owns(currentChunk)) {
+                Language.sendBad(chunkyResident.getChunkyPlayer(),"You cannot teleport from other town's land.");
+                return;}}
 
         ((Player)sender).teleport(chunkyTown.getHome().getCoord().toLocation());
 

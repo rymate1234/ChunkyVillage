@@ -14,3 +14,6 @@ permissions:
     chunky.town.create:
         description: Create new towns.
         default: op
+    chunky.admin.teleport:
+        description: Teleport without restrictions.
+        default: op

@@ -1,11 +1,11 @@
 package org.getchunky.chunkyvillage.listeners;
 
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerListener;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.*;
 import org.getchunky.chunky.ChunkyManager;
+import org.getchunky.chunky.locale.Language;
+import org.getchunky.chunky.object.ChunkyChunk;
 import org.getchunky.chunky.object.ChunkyPlayer;
+import org.getchunky.chunkyvillage.ChatManager;
 import org.getchunky.chunkyvillage.ChunkyTownManager;
 import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
@@ -32,6 +32,16 @@ public class PlayerEvents extends PlayerListener{
         //Save playtime
         new ChunkyResident(event.getPlayer()).logout();
 
+
+    }
+
+    @Override
+    public void onPlayerChat(PlayerChatEvent event) {
+        if(ChatManager.handleMessage(event.getPlayer(), event.getMessage())) event.setCancelled(true);
+    }
+
+    @Override
+    public void onPlayerTeleport(PlayerTeleportEvent event) {
 
     }
 }

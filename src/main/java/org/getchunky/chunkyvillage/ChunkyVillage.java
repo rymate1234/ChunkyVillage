@@ -18,6 +18,7 @@ import org.getchunky.chunkyvillage.commands.set.SetName;
 import org.getchunky.chunkyvillage.commands.set.SetStance;
 import org.getchunky.chunkyvillage.commands.toggle.Toggle;
 import org.getchunky.chunkyvillage.commands.toggle.ToggleAssistant;
+import org.getchunky.chunkyvillage.commands.toggle.ToggleTownChat;
 import org.getchunky.chunkyvillage.listeners.ChunkyEvents;
 import org.getchunky.chunkyvillage.listeners.PlayerEvents;
 import org.getchunky.chunkyvillage.util.Config;
@@ -60,6 +61,8 @@ public class ChunkyVillage extends JavaPlugin {
         pm.registerEvent(Event.Type.PLAYER_RESPAWN, playerEvents, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.PLAYER_JOIN, playerEvents, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.PLAYER_QUIT, playerEvents, Event.Priority.Normal, this);
+        pm.registerEvent(Event.Type.PLAYER_TELEPORT, playerEvents, Event.Priority.Highest, this);
+        pm.registerEvent(Event.Type.PLAYER_CHAT, playerEvents, Event.Priority.Low, this);
 
 
 
@@ -109,6 +112,8 @@ public class ChunkyVillage extends JavaPlugin {
 
             ChunkyCommand toggleAssistant = new ChunkyCommand("assistant",new ToggleAssistant(),toggle).setAliases("a").setDescription("Toggles an assistant.").setHelpLines("/c town toggle assistant <name> or /c t t a <name>");
 
+            ChunkyCommand toggleTownChat = new ChunkyCommand("townchat",new ToggleTownChat(),toggle).setAliases("tc").setDescription("Toggles town chat.").setHelpLines("/c town toggle townchat or /c t t tc");
+
             ChunkyCommand delete = new ChunkyCommand("delete",new Delete(),town).setAliases("del").setDescription("Deletes town.").setHelpLines("/c town delete or /c t del");
 
             Chunky.getModuleManager().registerCommand(town);
@@ -131,6 +136,7 @@ public class ChunkyVillage extends JavaPlugin {
             Chunky.getModuleManager().registerCommand(setStance);
             Chunky.getModuleManager().registerCommand(toggle);
             Chunky.getModuleManager().registerCommand(toggleAssistant);
+            Chunky.getModuleManager().registerCommand(toggleTownChat);
 
         } catch (ChunkyUnregisteredException e) {
             e.printStackTrace();

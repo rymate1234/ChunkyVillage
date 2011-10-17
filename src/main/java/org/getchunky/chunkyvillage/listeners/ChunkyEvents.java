@@ -1,11 +1,13 @@
 package org.getchunky.chunkyvillage.listeners;
 
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.event.object.player.ChunkyPlayerChunkChangeEvent;
 import org.getchunky.chunky.event.object.player.ChunkyPlayerChunkClaimEvent;
 import org.getchunky.chunky.event.object.player.ChunkyPlayerListener;
+import org.getchunky.chunky.exceptions.ChunkyPlayerOfflineException;
 import org.getchunky.chunky.locale.Language;
 import org.getchunky.chunky.object.ChunkyChunk;
 import org.getchunky.chunky.object.ChunkyCoordinates;
@@ -67,9 +69,11 @@ public class ChunkyEvents extends ChunkyPlayerListener {
 
     @Override
     public void onPlayerChunkChange(ChunkyPlayerChunkChangeEvent event) {
-        ChunkyTown chunkyTown = ChunkyTownManager.getTown(event.getChunkyPlayer());
+        ChunkyTown myTown = ChunkyTownManager.getTown(event.getChunkyPlayer());
         TownChunk toChunk = new TownChunk(event.getToChunk());
-        if(chunkyTown == null) return;
+        ChunkyTown chunkTown = toChunk.getTown();
+        if(myTown == null || chunkTown == null) return;
+
         if(toChunk.isForSale())
             event.setMessage(event.getToChunk().getOwner().getName() + " - on sale for: " + ChatColor.YELLOW  + Chunky.getMethod().format(toChunk.getCost()));
     }
