@@ -1,5 +1,6 @@
 package org.getchunky.chunkyvillage;
 
+import org.bukkit.Bukkit;
 import org.bukkit.event.*;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.Plugin;
@@ -49,7 +50,7 @@ public class ChunkyVillage extends JavaPlugin {
 
         CallHome.load(this);
         if(Updater.updateCheck("http://build.blockface.org/job/ChunkyVillage/lastSuccessfulBuild/artifact/target/ChunkyVillage-SNAPSHOT.jar", "ChunkyVillage.jar")) {
-            Logging.severe("New version downloaded. Please reboot once more.");
+            getServer().dispatchCommand(getServer().getConsoleSender(), "stop");
         }
 
         Config.load();
