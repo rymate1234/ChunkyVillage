@@ -21,6 +21,8 @@ public class Config {
         TOWN_CHAT_FORMAT("settings.town.townChatFormat", "&3[%town%]&f %displayname%: &3%msg%"),
         MAYOR_TITLE("settings.town.defaultMayorTitle", "&6Mayor&f"),
         ASSISTANT_TITLE("settings.town.defaultAssistantTitle", "&5Assistant&f"),
+        TELEPORT_WARMUP("settings.town.teleportWarmup", 10),
+
         AUTOUPDATE("settings.autoUpdate", true),
         TNT_COST("settings.war.tools.46", 60),
         LADDER_COST("settings.war.tools.65",10)

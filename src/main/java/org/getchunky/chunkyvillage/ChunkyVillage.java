@@ -13,6 +13,7 @@ import org.getchunky.chunky.module.ChunkyCommand;
 import org.getchunky.chunky.util.Logging;
 import org.getchunky.chunkyvillage.commands.Admin.Admin;
 import org.getchunky.chunkyvillage.commands.Admin.AdminAddResident;
+import org.getchunky.chunkyvillage.commands.Admin.AdminKickResident;
 import org.getchunky.chunkyvillage.commands.Resident.Resident;
 import org.getchunky.chunkyvillage.commands.Town.List;
 import org.getchunky.chunkyvillage.commands.Town.*;
@@ -126,9 +127,11 @@ public class ChunkyVillage extends JavaPlugin {
 
             ChunkyCommand admin = new ChunkyCommand("admin",new Admin(),null).setAliases("admin").setHelpLines("/admin ?").setDescription("Admin commands to manage towns.");
 
-            ChunkyCommand adminAddResident = new ChunkyCommand("add", new AdminAddResident(),admin).setAliases("a").setDescription("Adds resident to town.").setHelpLines("/town add <town> <player> or /t a <town> <player>");
+            ChunkyCommand adminAddResident = new ChunkyCommand("add", new AdminAddResident(),admin).setAliases("a").setDescription("Adds resident to town.").setHelpLines("/admin add <town> <player> or /a a <town> <player>");
 
+            ChunkyCommand adminKickResident = new ChunkyCommand("kick", new AdminKickResident(),admin).setAliases("k").setDescription("Kicks resident from town.").setHelpLines("/admin kick <player> or /a k <player>");
 
+            //Town Commands
             Chunky.getModuleManager().registerCommand(town);
             Chunky.getModuleManager().registerCommand(newTown);
             Chunky.getModuleManager().registerCommand(delete);
@@ -152,11 +155,13 @@ public class ChunkyVillage extends JavaPlugin {
             Chunky.getModuleManager().registerCommand(toggleAssistant);
             Chunky.getModuleManager().registerCommand(toggleTownChat);
 
+            //Resident Commands
             Chunky.getModuleManager().registerCommand(resident);
 
+            //Admin Commands
             Chunky.getModuleManager().registerCommand(admin);
             Chunky.getModuleManager().registerCommand(adminAddResident);
-            Logging.info("Registered Commands.");
+            Chunky.getModuleManager().registerCommand(adminKickResident);
 
         } catch (ChunkyUnregisteredException e) {
             e.printStackTrace();
