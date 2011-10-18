@@ -1,6 +1,6 @@
-package org.getchunky.chunkyvillage.commands;
+package org.getchunky.chunkyvillage.commands.Town.toggle;
 
-import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.getchunky.chunky.ChunkyManager;
@@ -12,9 +12,10 @@ import org.getchunky.chunkyvillage.ChunkyTownManager;
 import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
 
-public class AddResident implements ChunkyCommandExecutor{
+public class ToggleAssistant implements ChunkyCommandExecutor{
+
     public void onCommand(CommandSender sender, ChunkyCommand chunkyCommand, String s, String[] strings) {
-        if(!(sender instanceof Player)) {
+         if(!(sender instanceof Player)) {
             Language.IN_GAME_ONLY.bad(sender);
             return;
         }
@@ -22,7 +23,7 @@ public class AddResident implements ChunkyCommandExecutor{
         ChunkyResident chunkyResident = new ChunkyResident(sender);
 
         if(strings.length < 1) {
-            Language.sendBad(chunkyResident.getChunkyPlayer(),"Please specify player to add.");
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"Please specify player.");
             return;
         }
 
@@ -32,27 +33,27 @@ public class AddResident implements ChunkyCommandExecutor{
             return;
         }
 
-        if(!chunkyResident.isAssistantOrMayor()) {
+        if(!chunkyResident.isMayor()) {
             Language.sendBad(chunkyResident.getChunkyPlayer(),"You do not have the authority to do this.");
             return;
         }
 
-        ChunkyResident newResident = new ChunkyResident(strings[0]);
+        ChunkyResident assistant = new ChunkyResident(strings[0]);
 
-        if(newResident.getChunkyPlayer()==null) {
-            Language.sendBad(chunkyResident.getChunkyPlayer(), "This player does not exist.");
+        if(!chunkyTown.isResident(assistant)) {
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"This player does not belong to your town.");
             return;
         }
 
-        if(newResident.getTown() != null) {
-            Language.sendBad(chunkyResident.getChunkyPlayer(),"This player is already part of a town");
-            return;
+        if(assistant.isAssistant()) {
+            chunkyTown.removeAssistant(assistant);
+            Language.sendGood(chunkyResident.getChunkyPlayer(), ChatColor.RED + "You have been demoted from assistant.");
+            Language.sendMessage(assistant.getChunkyPlayer(), ChatColor.RED + assistant.getName() + " has been demoted from assistant.");
         }
-
-        chunkyTown.addResident(newResident);
-        Language.sendGood(chunkyResident.getChunkyPlayer(),newResident.getName() + " added to " + chunkyTown.getName());
-        Language.sendGood(newResident.getChunkyPlayer(),"You were added to town " + chunkyTown.getName());
-
+        else {
+            chunkyTown.addAssistant(assistant);
+            Language.sendGood(assistant.getChunkyPlayer(),"You have been promoted to assistant.");
+            Language.sendGood(chunkyResident.getChunkyPlayer(),assistant.getName() + " has been promoted to assistant.");}
 
 
     }

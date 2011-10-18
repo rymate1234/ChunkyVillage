@@ -1,4 +1,4 @@
-package org.getchunky.chunkyvillage.commands;
+package org.getchunky.chunkyvillage.commands.Town;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -7,6 +7,7 @@ import org.getchunky.chunky.locale.Language;
 import org.getchunky.chunky.module.ChunkyCommand;
 import org.getchunky.chunky.module.ChunkyCommandExecutor;
 import org.getchunky.chunky.object.ChunkyObject;
+import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunkyvillage.ChunkyTownManager;
 import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
@@ -49,7 +50,8 @@ public class Town implements ChunkyCommandExecutor{
         String res = "";
         int i=0;
         for(ChunkyObject chunkyObject : chunkyTown.getResidents()) {
-            res += ChatColor.WHITE + chunkyObject .getName() + ChatColor.GRAY + ", ";
+            ChunkyPlayer chunkyPlayer = (ChunkyPlayer)chunkyObject;
+            res += (chunkyPlayer.isOnline() ? ChatColor.AQUA : ChatColor.WHITE) + chunkyObject .getName() + ChatColor.GRAY + ", ";
             i++;
             if(i>40) break;
         }

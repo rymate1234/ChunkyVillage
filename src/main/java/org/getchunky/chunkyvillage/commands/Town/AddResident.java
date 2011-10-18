@@ -1,4 +1,4 @@
-package org.getchunky.chunkyvillage.commands;
+package org.getchunky.chunkyvillage.commands.Town;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -12,8 +12,7 @@ import org.getchunky.chunkyvillage.ChunkyTownManager;
 import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
 
-public class KickResident implements ChunkyCommandExecutor{
-
+public class AddResident implements ChunkyCommandExecutor{
     public void onCommand(CommandSender sender, ChunkyCommand chunkyCommand, String s, String[] strings) {
         if(!(sender instanceof Player)) {
             Language.IN_GAME_ONLY.bad(sender);
@@ -38,21 +37,21 @@ public class KickResident implements ChunkyCommandExecutor{
             return;
         }
 
-        ChunkyResident toKick = new ChunkyResident(strings[0]);
+        ChunkyResident newResident = new ChunkyResident(strings[0]);
 
-        if(toKick.isAssistantOrMayor()) {
-            Language.sendBad(chunkyResident.getChunkyPlayer(),"You may not kick assistants or the mayor.");
+        if(newResident.getChunkyPlayer()==null) {
+            Language.sendBad(chunkyResident.getChunkyPlayer(), "This player does not exist.");
             return;
         }
 
-        if(!chunkyTown.isResident(toKick)) {
-            Language.sendBad(chunkyResident.getChunkyPlayer(),"This player is not in your town");
+        if(newResident.getTown() != null) {
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"This player is already part of a town");
             return;
         }
 
-        chunkyTown.kickResident(toKick);
-        Language.sendGood(chunkyResident.getChunkyPlayer(),toKick.getName() + " was kicked from " + chunkyTown.getName());
-        Language.sendGood(toKick.getChunkyPlayer(),"You were kicked from " + chunkyTown.getName());
+        chunkyTown.addResident(newResident);
+        Language.sendGood(chunkyResident.getChunkyPlayer(),newResident.getName() + " added to " + chunkyTown.getName());
+        Language.sendGood(newResident.getChunkyPlayer(),"You were added to town " + chunkyTown.getName());
 
 
 

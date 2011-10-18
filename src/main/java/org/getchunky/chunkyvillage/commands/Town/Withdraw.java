@@ -1,4 +1,4 @@
-package org.getchunky.chunkyvillage.commands.set;
+package org.getchunky.chunkyvillage.commands.Town;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -10,33 +10,34 @@ import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunkyvillage.ChunkyTownManager;
 import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
+import org.getchunky.chunkyvillage.util.Tools;
 
-public class SetName implements ChunkyCommandExecutor{
+public class Withdraw implements ChunkyCommandExecutor{
 
     public void onCommand(CommandSender sender, ChunkyCommand chunkyCommand, String s, String[] strings) {
-
         if(!(sender instanceof Player)) {
             Language.IN_GAME_ONLY.bad(sender);
-            return;
-        }
+            return;}
 
         ChunkyResident chunkyResident = new ChunkyResident(sender);
 
         if(strings.length < 1) {
-            Language.sendBad(chunkyResident.getChunkyPlayer(),"Please specify new name.");
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"You must specify the amount to withdraw.");
             return;
         }
+
+        double amount = Tools.parseDouble(strings[0]);
+
+        if(amount < 1) {
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"Please specify a proper number.");
+            return;
+        }
+
+        if(!chunkyResident.isAssistantOrMayor()) {
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"You do not have the authority to do this");
+            return;}
 
         ChunkyTown chunkyTown = chunkyResident.getTown();
-
-        if(!chunkyResident.isMayor()) {
-            Language.sendBad(chunkyResident.getChunkyPlayer(),"You do not have the authority to do this.");
-            return;
-        }
-
-        chunkyTown.setName(strings[0]);
-
-        Language.sendGood(chunkyResident.getChunkyPlayer(),"Town has been renamed to " + strings[0]);
-
+        chunkyTown.withdraw(chunkyResident,amount);
     }
 }

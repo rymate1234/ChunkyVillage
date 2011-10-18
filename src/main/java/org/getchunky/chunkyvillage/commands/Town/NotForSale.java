@@ -1,4 +1,4 @@
-package org.getchunky.chunkyvillage.commands;
+package org.getchunky.chunkyvillage.commands.Town;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -14,14 +14,14 @@ import org.getchunky.chunkyvillage.objects.ChunkyTown;
 import org.getchunky.chunkyvillage.objects.TownChunk;
 import org.getchunky.chunkyvillage.util.Tools;
 
-public class ForSale implements ChunkyCommandExecutor{
+public class NotForSale implements ChunkyCommandExecutor{
     public void onCommand(CommandSender sender, ChunkyCommand chunkyCommand, String s, String[] strings) {
         if(!(sender instanceof Player)) {
             Language.IN_GAME_ONLY.bad(sender);
             return;
         }
         Player player = (Player)sender;
-        ChunkyResident chunkyResident = new ChunkyResident(player);
+        ChunkyResident chunkyResident = new ChunkyResident(player.getName());
         ChunkyChunk chunkyChunk = chunkyResident.getChunkyPlayer().getCurrentChunk();
         ChunkyTown chunkyTown = chunkyResident.getTown();
         if(chunkyTown == null) {
@@ -39,14 +39,7 @@ public class ForSale implements ChunkyCommandExecutor{
             return;
         }
 
-        double cost = 100;
-
-        if(strings.length > 0) {
-            cost = Tools.parseDouble(strings[0]);
-            if(cost<0) {
-                Language.sendBad(chunkyResident.getChunkyPlayer(),"This is not a valid number.");}}
-
-        new TownChunk(chunkyChunk).setForSale(cost);
-        Language.sendGood(chunkyResident.getChunkyPlayer(),"This plot is on sale for " + cost);
+        new TownChunk(chunkyChunk).setNotForSale();
+        Language.sendGood(chunkyResident.getChunkyPlayer(),"This plot is no longer for sale");
     }
 }

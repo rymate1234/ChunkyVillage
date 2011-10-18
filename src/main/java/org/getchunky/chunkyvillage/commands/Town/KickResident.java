@@ -1,6 +1,6 @@
-package org.getchunky.chunkyvillage.commands.toggle;
+package org.getchunky.chunkyvillage.commands.Town;
 
-import org.bukkit.ChatColor;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.getchunky.chunky.ChunkyManager;
@@ -12,10 +12,10 @@ import org.getchunky.chunkyvillage.ChunkyTownManager;
 import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
 
-public class ToggleAssistant implements ChunkyCommandExecutor{
+public class KickResident implements ChunkyCommandExecutor{
 
     public void onCommand(CommandSender sender, ChunkyCommand chunkyCommand, String s, String[] strings) {
-         if(!(sender instanceof Player)) {
+        if(!(sender instanceof Player)) {
             Language.IN_GAME_ONLY.bad(sender);
             return;
         }
@@ -23,7 +23,7 @@ public class ToggleAssistant implements ChunkyCommandExecutor{
         ChunkyResident chunkyResident = new ChunkyResident(sender);
 
         if(strings.length < 1) {
-            Language.sendBad(chunkyResident.getChunkyPlayer(),"Please specify player.");
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"Please specify player to add.");
             return;
         }
 
@@ -33,27 +33,27 @@ public class ToggleAssistant implements ChunkyCommandExecutor{
             return;
         }
 
-        if(!chunkyResident.isMayor()) {
+        if(!chunkyResident.isAssistantOrMayor()) {
             Language.sendBad(chunkyResident.getChunkyPlayer(),"You do not have the authority to do this.");
             return;
         }
 
-        ChunkyResident assistant = new ChunkyResident(strings[0]);
+        ChunkyResident toKick = new ChunkyResident(strings[0]);
 
-        if(!chunkyTown.isResident(assistant)) {
-            Language.sendBad(chunkyResident.getChunkyPlayer(),"This player does not belong to your town.");
+        if(toKick.isAssistantOrMayor()) {
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"You may not kick assistants or the mayor.");
             return;
         }
 
-        if(assistant.isAssistant()) {
-            chunkyTown.removeAssistant(assistant);
-            Language.sendGood(chunkyResident.getChunkyPlayer(), ChatColor.RED + "You have been demoted from assistant.");
-            Language.sendMessage(assistant.getChunkyPlayer(), ChatColor.RED + assistant.getName() + " has been demoted from assistant.");
+        if(!chunkyTown.isResident(toKick)) {
+            Language.sendBad(chunkyResident.getChunkyPlayer(),"This player is not in your town");
+            return;
         }
-        else {
-            chunkyTown.addAssistant(assistant);
-            Language.sendGood(assistant.getChunkyPlayer(),"You have been promoted to assistant.");
-            Language.sendGood(chunkyResident.getChunkyPlayer(),assistant.getName() + " has been promoted to assistant.");}
+
+        chunkyTown.kickResident(toKick);
+        Language.sendGood(chunkyResident.getChunkyPlayer(),toKick.getName() + " was kicked from " + chunkyTown.getName());
+        Language.sendGood(toKick.getChunkyPlayer(),"You were kicked from " + chunkyTown.getName());
+
 
 
     }

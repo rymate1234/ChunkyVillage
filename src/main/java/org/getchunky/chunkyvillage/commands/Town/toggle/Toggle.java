@@ -1,4 +1,4 @@
-package org.getchunky.chunkyvillage.commands.toggle;
+package org.getchunky.chunkyvillage.commands.Town.toggle;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

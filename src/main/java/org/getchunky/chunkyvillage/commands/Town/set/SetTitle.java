@@ -1,4 +1,4 @@
-package org.getchunky.chunkyvillage.commands.set;
+package org.getchunky.chunkyvillage.commands.Town.set;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

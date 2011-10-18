@@ -1,4 +1,4 @@
-package org.getchunky.chunkyvillage.commands;
+package org.getchunky.chunkyvillage.commands.Town;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
