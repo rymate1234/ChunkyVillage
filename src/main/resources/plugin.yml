@@ -9,8 +9,11 @@ version: ${build.number}
 depend: [Chunky]
 commands:
     town:
-        description: The root command for town stuff.
+        description: Displays town information and contains other commands.
         aliases: t
+    resident:
+        description: Displays resident information and contains other commands.
+        aliases: [r,res]
 permissions:
     chunky.town.create:
         description: Create new towns.

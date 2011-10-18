@@ -10,12 +10,13 @@ import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.event.ChunkyEvent;
 import org.getchunky.chunky.exceptions.ChunkyUnregisteredException;
 import org.getchunky.chunky.module.ChunkyCommand;
-import org.getchunky.chunkyvillage.commands.*;
-import org.getchunky.chunkyvillage.commands.List;
-import org.getchunky.chunkyvillage.commands.set.*;
-import org.getchunky.chunkyvillage.commands.toggle.Toggle;
-import org.getchunky.chunkyvillage.commands.toggle.ToggleAssistant;
-import org.getchunky.chunkyvillage.commands.toggle.ToggleTownChat;
+import org.getchunky.chunkyvillage.commands.Resident.Resident;
+import org.getchunky.chunkyvillage.commands.Town.List;
+import org.getchunky.chunkyvillage.commands.Town.*;
+import org.getchunky.chunkyvillage.commands.Town.set.*;
+import org.getchunky.chunkyvillage.commands.Town.toggle.Toggle;
+import org.getchunky.chunkyvillage.commands.Town.toggle.ToggleAssistant;
+import org.getchunky.chunkyvillage.commands.Town.toggle.ToggleTownChat;
 import org.getchunky.chunkyvillage.listeners.ChunkyEvents;
 import org.getchunky.chunkyvillage.listeners.PlayerEvents;
 import org.getchunky.chunkyvillage.util.Config;
@@ -51,6 +52,7 @@ public class ChunkyVillage extends JavaPlugin {
         chunkyEvents = new ChunkyEvents();
         Chunky.getModuleManager().registerEvent(ChunkyEvent.Type.PLAYER_CHUNK_CLAIM, chunkyEvents, ChunkyEvent.Priority.Normal,this);
         Chunky.getModuleManager().registerEvent(ChunkyEvent.Type.PLAYER_CHUNK_CHANGE, chunkyEvents, ChunkyEvent.Priority.Normal,this);
+        Chunky.getModuleManager().registerEvent(ChunkyEvent.Type.PLAYER_BUILD, chunkyEvents, ChunkyEvent.Priority.Normal,this);
 
         PluginManager pm = this.getServer().getPluginManager();
 
@@ -117,6 +119,9 @@ public class ChunkyVillage extends JavaPlugin {
 
             ChunkyCommand delete = new ChunkyCommand("delete",new Delete(),town).setAliases("del").setDescription("Deletes town.").setHelpLines("/town delete or /t del");
 
+            ChunkyCommand resident = new ChunkyCommand("resident",new Resident(),null).setAliases("r","res").setHelpLines("/resident [player] or /res [player]").setDescription("Shows information about resident");
+
+
             Chunky.getModuleManager().registerCommand(town);
             Chunky.getModuleManager().registerCommand(newTown);
             Chunky.getModuleManager().registerCommand(delete);
@@ -139,6 +144,8 @@ public class ChunkyVillage extends JavaPlugin {
             Chunky.getModuleManager().registerCommand(toggle);
             Chunky.getModuleManager().registerCommand(toggleAssistant);
             Chunky.getModuleManager().registerCommand(toggleTownChat);
+
+            Chunky.getModuleManager().registerCommand(resident);
 
         } catch (ChunkyUnregisteredException e) {
             e.printStackTrace();

@@ -1,20 +1,28 @@
 package org.getchunky.chunkyvillage.listeners;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.entity.TNTPrimed;
 import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.ChunkyManager;
+import org.getchunky.chunky.event.object.player.ChunkyPlayerBuildEvent;
 import org.getchunky.chunky.event.object.player.ChunkyPlayerChunkChangeEvent;
 import org.getchunky.chunky.event.object.player.ChunkyPlayerChunkClaimEvent;
 import org.getchunky.chunky.event.object.player.ChunkyPlayerListener;
-import org.getchunky.chunky.exceptions.ChunkyPlayerOfflineException;
 import org.getchunky.chunky.locale.Language;
 import org.getchunky.chunky.object.ChunkyChunk;
 import org.getchunky.chunky.object.ChunkyCoordinates;
 import org.getchunky.chunkyvillage.ChunkyTownManager;
+import org.getchunky.chunkyvillage.ChunkyVillage;
 import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
 import org.getchunky.chunkyvillage.objects.TownChunk;
+import org.getchunky.chunkyvillage.tasks.Explode;
+import org.getchunky.chunkyvillage.tasks.RemoveBlock;
+import org.getchunky.chunkyvillage.util.Config;
 
 public class ChunkyEvents extends ChunkyPlayerListener {
     @Override
@@ -76,6 +84,44 @@ public class ChunkyEvents extends ChunkyPlayerListener {
 
         if(toChunk.isForSale())
             event.setMessage(event.getToChunk().getOwner().getName() + " - on sale for: " + ChatColor.YELLOW  + Chunky.getMethod().format(toChunk.getCost()));
+    }
+
+    @Override
+    public void onPlayerUnownedBuild(ChunkyPlayerBuildEvent event) {
+        Block block = event.getBlock();
+
+        if(!Config.isWarTool(block.getTypeId())) return;
+
+        TownChunk chunk = new TownChunk(event.getChunkyChunk());
+        ChunkyTown defendingTown = chunk.getTown();
+        if(defendingTown == null) return;
+        ChunkyResident attacker = new ChunkyResident(event.getChunkyPlayer());
+        ChunkyTown attackingTown = attacker.getTown();
+
+        if(attackingTown == null) return;
+
+        if(defendingTown.getEffectiveStance(attackingTown) != ChunkyTown.Stance.ENEMY) {
+            Language.sendBad(attacker.getChunkyPlayer(), "This is not an enemy town.");
+            return;
+        }
+
+        int cost = Config.getWarToolCost(block.getType().getId());
+
+        if(attacker.getPlayTime() < cost) {
+            Language.sendBad(attacker.getChunkyPlayer(), "You do not have enough Influence to do this.");
+            return;
+        }
+
+        attacker.subtractPlayTime(cost);
+        event.setCancelled(false);
+
+        if(block.getType() == Material.TNT)
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(ChunkyVillage.getInstance(), new Explode(block), 20L * 3);
+        else Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(ChunkyVillage.getInstance(), new RemoveBlock(block), 20L * 20);
+
+        Language.sendGood(attacker.getChunkyPlayer(), "That cost " + cost + " Influence");
+
+
     }
 }
 

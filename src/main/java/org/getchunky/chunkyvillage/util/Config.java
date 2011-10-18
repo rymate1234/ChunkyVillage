@@ -2,7 +2,10 @@ package org.getchunky.chunkyvillage.util;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.util.config.Configuration;
+import org.getchunky.chunky.util.Logging;
 import org.getchunky.chunkyvillage.ChunkyVillage;
+
+import java.util.HashMap;
 
 public class Config {
     private static Configuration configuration;
@@ -16,7 +19,10 @@ public class Config {
         DEATH_TOLL("settings.resident.influenceLostOnDeath", 10),
         TOWN_CHAT_FORMAT("settings.town.townChatFormat", "&3[%town%]&f %displayname%: &3%msg%"),
         MAYOR_TITLE("settings.town.defaultMayorTitle", "&6Mayor&f"),
-        ASSISTANT_TITLE("settings.town.defaultAssistantTitle", "&5Assistant&f")
+        ASSISTANT_TITLE("settings.town.defaultAssistantTitle", "&5Assistant&f"),
+        AUTOUPDATE("settings.autoUpdate", true),
+        TNT_COST("settings.war.tools.46", 60),
+        LADDER_COST("settings.war.tools.65",10)
         ;
 
         private String path;
@@ -47,9 +53,32 @@ public class Config {
         configuration.save();
     }
 
+
     private static void loadDefaults() {
         for(Options option : Options.values()) {
             option.getString();}
+        loadWarTools();
+    }
+
+    private static HashMap<Integer, Integer> warTools = new HashMap<Integer, Integer>();
+
+    private static void loadWarTools() {
+        for(String s : configuration.getKeys("settings.war.tools")) {
+            try {
+                int pos = s.lastIndexOf(".") + 1;
+                int id = Integer.parseInt(s.substring(pos, s.length() - pos));
+                Logging.info("Added: " + id);
+                warTools.put(id, configuration.getInt("settings.war.tools."+s, 0));
+            } catch (Exception ex) {}
+        }
+    }
+
+    public static boolean isWarTool(Integer id) {
+        return warTools.containsKey(id);
+    }
+
+    public static int getWarToolCost(Integer id) {
+        return warTools.get(id);
     }
 
 
