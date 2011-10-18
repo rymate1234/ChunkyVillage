@@ -41,13 +41,11 @@ public class AddResident implements ChunkyCommandExecutor{
 
         if(newResident.getChunkyPlayer()==null) {
             Language.sendBad(chunkyResident.getChunkyPlayer(), "This player does not exist.");
-            return;
-        }
+            return;}
 
         if(newResident.getTown() != null) {
             Language.sendBad(chunkyResident.getChunkyPlayer(),"This player is already part of a town");
-            return;
-        }
+            return;}
 
         chunkyTown.addResident(newResident);
         Language.sendGood(chunkyResident.getChunkyPlayer(),newResident.getName() + " added to " + chunkyTown.getName());
