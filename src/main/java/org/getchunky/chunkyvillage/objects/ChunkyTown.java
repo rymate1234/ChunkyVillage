@@ -12,9 +12,6 @@ import org.getchunky.chunky.object.ChunkyGroup;
 import org.getchunky.chunky.object.ChunkyObject;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunky.permission.PermissionFlag;
-import org.getchunky.chunkyvillage.ChunkyTownManager;
-import org.getchunky.chunkyvillage.commands.List;
-import org.getchunky.chunkyvillage.util.Config;
 import org.getchunky.register.payment.Method;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -81,7 +78,8 @@ public class ChunkyTown extends ChunkyObject {
         if(oldOwner!=null) {
             oldOwner.getData().remove("village-title");
             oldOwner.setOwner(this, true, false);
-            oldOwner.getData().remove("mayor");}
+            oldOwner.getData().remove("mayor");
+            oldOwner.save();}
         mayor.getData().put("mayor",this.getId());
         mayor.setTitle(Options.MAYOR_TITLE.getString());
         mayor.save();

@@ -83,6 +83,7 @@ public class ChunkyResident {
 
     public void removeTitle() {
         chunkyPlayer.getData().remove("village-title");
+        chunkyPlayer.save();
     }
 
     public boolean hasTitle() {
@@ -94,7 +95,7 @@ public class ChunkyResident {
 
     public boolean isMayor() {
         ChunkyTown chunkyTown = getTown();
-        return chunkyTown != null && !chunkyTown.getMayor().equals(this);
+        return chunkyTown != null && chunkyTown.getMayor().equals(this);
     }
 
     public boolean isAssistant() {
