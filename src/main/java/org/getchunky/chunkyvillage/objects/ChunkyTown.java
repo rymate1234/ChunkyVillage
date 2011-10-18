@@ -22,6 +22,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 
 import static org.getchunky.chunkyvillage.util.Config.Options;
+import static org.getchunky.chunkyvillage.util.Config.Options.ELECTION_PERCENTAGE;
+import static org.getchunky.chunkyvillage.util.Config.Options.INFLUENCE_PER_VOTE;
 
 public class ChunkyTown extends ChunkyObject {
 
@@ -205,6 +207,7 @@ public class ChunkyTown extends ChunkyObject {
         HashMap<String, Long> standings = new HashMap<String, Long>();
         JSONObject votes = getVotes();
         Iterator keys = votes.keys();
+        int required = getTotalInfluence()/ INFLUENCE_PER_VOTE.getInt() * ELECTION_PERCENTAGE.getInt()/100;
         while (keys.hasNext()) {
             String voter = keys.next().toString();
             String candidate = null;
@@ -215,6 +218,7 @@ public class ChunkyTown extends ChunkyObject {
             standings.put(candidate,v);
         }
         Language.sendMessage(chunkyPlayer,ChatColor.GRAY + "|-------------------" +ChatColor.GREEN + "[Votes]" + ChatColor.GRAY + "-------------------|");
+        Language.sendMessage(chunkyPlayer,ChatColor.GREEN + "Required to Win: " + ChatColor.YELLOW + required + " votes");
         for(String candidate : standings.keySet()) {
             Language.sendMessage(chunkyPlayer,ChatColor.GREEN + candidate + ": " + ChatColor.YELLOW + standings.get(candidate) + " votes");
         }
