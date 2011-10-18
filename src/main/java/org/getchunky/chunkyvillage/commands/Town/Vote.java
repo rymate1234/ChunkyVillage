@@ -2,16 +2,12 @@ package org.getchunky.chunkyvillage.commands.Town;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.locale.Language;
 import org.getchunky.chunky.module.ChunkyCommand;
 import org.getchunky.chunky.module.ChunkyCommandExecutor;
-import org.getchunky.chunky.object.ChunkyPlayer;
-import org.getchunky.chunkyvillage.ChunkyTownManager;
 import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
 import org.getchunky.chunkyvillage.util.Config;
-import org.getchunky.chunkyvillage.util.Tools;
 
 public class Vote implements ChunkyCommandExecutor{
 
@@ -40,8 +36,9 @@ public class Vote implements ChunkyCommandExecutor{
             return;}
 
         int i = chunkyTown.addVote(chunkyResident,candidate);
-        chunkyTown.goodMessageTown(chunkyResident.getName() + " has voted for " + candidate.getName() + ", " + i + " total votes.");
-        if(chunkyTown.getResidents().size() * (Config.Options.ELECTION_PERCENTAGE.getDouble()/100) <= i) {
+        int required = chunkyTown.getResidents().size() * Config.Options.ELECTION_PERCENTAGE.getInt()/100;
+        chunkyTown.goodMessageTown("Someone has voted for " + candidate.getName() + ", " + i + " total votes with " + (required-i) + " left to go.");
+        if(required <= i) {
             if(!candidate.getName().equals(chunkyTown.getOwner().getName()))chunkyTown.setMayor(candidate);
             chunkyTown.clearVotes();
             chunkyTown.save();

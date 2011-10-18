@@ -4,6 +4,7 @@ import org.bukkit.event.player.*;
 import org.getchunky.chunkyvillage.ChatManager;
 import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
+import org.getchunky.chunkyvillage.util.Config;
 
 import static org.getchunky.chunkyvillage.util.Config.Options;
 
@@ -15,7 +16,7 @@ public class PlayerEvents extends PlayerListener{
         ChunkyResident chunkyResident = new ChunkyResident(event.getPlayer());
         ChunkyTown chunkyTown = chunkyResident.getTown();
         if(chunkyTown==null) return;
-        chunkyResident.setPlayTime(chunkyResident.getPlayTime()- Options.DEATH_TOLL.getInt());
+        chunkyResident.subtractPlayTime(Config.Options.DEATH_TOLL.getInt());
         event.setRespawnLocation(chunkyTown.getHome().getCoord().toLocation());}
 
     @Override
