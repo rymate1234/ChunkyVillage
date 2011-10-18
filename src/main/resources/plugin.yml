@@ -14,6 +14,9 @@ commands:
     resident:
         description: Displays resident information and contains other commands.
         aliases: [r,res]
+    admin:
+        description: Modify all towns.
+        aliases: [a]
 permissions:
     chunky.town.create:
         description: Create new towns.

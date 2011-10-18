@@ -10,6 +10,9 @@ import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.event.ChunkyEvent;
 import org.getchunky.chunky.exceptions.ChunkyUnregisteredException;
 import org.getchunky.chunky.module.ChunkyCommand;
+import org.getchunky.chunky.util.Logging;
+import org.getchunky.chunkyvillage.commands.Admin.Admin;
+import org.getchunky.chunkyvillage.commands.Admin.AdminAddResident;
 import org.getchunky.chunkyvillage.commands.Resident.Resident;
 import org.getchunky.chunkyvillage.commands.Town.List;
 import org.getchunky.chunkyvillage.commands.Town.*;
@@ -121,6 +124,10 @@ public class ChunkyVillage extends JavaPlugin {
 
             ChunkyCommand resident = new ChunkyCommand("resident",new Resident(),null).setAliases("r","res").setHelpLines("/resident [player] or /res [player]").setDescription("Shows information about resident");
 
+            ChunkyCommand admin = new ChunkyCommand("admin",new Admin(),null).setAliases("admin").setHelpLines("/admin ?").setDescription("Admin commands to manage towns.");
+
+            ChunkyCommand adminAddResident = new ChunkyCommand("add", new AdminAddResident(),admin).setAliases("a").setDescription("Adds resident to town.").setHelpLines("/town add <town> <player> or /t a <town> <player>");
+
 
             Chunky.getModuleManager().registerCommand(town);
             Chunky.getModuleManager().registerCommand(newTown);
@@ -146,6 +153,10 @@ public class ChunkyVillage extends JavaPlugin {
             Chunky.getModuleManager().registerCommand(toggleTownChat);
 
             Chunky.getModuleManager().registerCommand(resident);
+
+            Chunky.getModuleManager().registerCommand(admin);
+            Chunky.getModuleManager().registerCommand(adminAddResident);
+            Logging.info("Registered Commands.");
 
         } catch (ChunkyUnregisteredException e) {
             e.printStackTrace();
