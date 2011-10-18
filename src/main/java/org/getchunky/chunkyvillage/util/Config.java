@@ -16,6 +16,7 @@ public class Config {
         CHUNKS_PER_INFLUENCE("settings.town.chunksPerInfluence", 0.5),
         BASE_CHUNKS("settings.town.baseChunks", 10),
         ELECTION_PERCENTAGE("settings.town.electionPercentage", 50),
+        INFLUENCE_PER_VOTE("settings.town.influencePerVote", 30),
         DEATH_TOLL("settings.resident.influenceLostOnDeath", 10),
         TOWN_CHAT_FORMAT("settings.town.townChatFormat", "&3[%town%]&f %displayname%: &3%msg%"),
         MAYOR_TITLE("settings.town.defaultMayorTitle", "&6Mayor&f"),

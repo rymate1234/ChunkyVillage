@@ -12,6 +12,7 @@ import org.getchunky.chunky.object.ChunkyGroup;
 import org.getchunky.chunky.object.ChunkyObject;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunky.permission.PermissionFlag;
+import org.getchunky.chunkyvillage.util.Config;
 import org.getchunky.register.payment.Method;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -179,7 +180,6 @@ public class ChunkyTown extends ChunkyObject {
         this.getData().put("votes",jsonObject);
         return jsonObject;
     }
-
     public int addVote(ChunkyResident chunkyResident, ChunkyResident candidate) {
         JSONObject votes = getVotes();
         votes.put(chunkyResident.getName(), candidate.getName());
@@ -188,7 +188,11 @@ public class ChunkyTown extends ChunkyObject {
         Iterator keys = votes.keys();
         String name = candidate.getName();
         while(keys.hasNext()) {
-            if(votes.getString(keys.next().toString()).equals(name)) i++;}
+            String key = keys.next().toString();
+            if(votes.getString(key).equals(name)){
+                ChunkyResident voter = new ChunkyResident(key);
+                i += voter.getVotingPower();
+            };}
         return i;
     }
 
@@ -198,19 +202,17 @@ public class ChunkyTown extends ChunkyObject {
 
     public void printVotes(ChunkyResident chunkyResident) {
         ChunkyPlayer chunkyPlayer = chunkyResident.getChunkyPlayer();
-        HashMap<String, Integer> standings = new HashMap<String, Integer>();
+        HashMap<String, Long> standings = new HashMap<String, Long>();
         JSONObject votes = getVotes();
         Iterator keys = votes.keys();
         while (keys.hasNext()) {
             String voter = keys.next().toString();
             String candidate = null;
             candidate = votes.getString(voter);
-            if(!standings.containsKey(candidate)) standings.put(candidate,1);
-            else {
-                Integer v = standings.get(candidate);
-                v++;
-                standings.put(candidate,v);
-            }
+            if(!standings.containsKey(candidate)) standings.put(candidate,0L);
+            Long v = standings.get(candidate);
+            v+= new ChunkyResident(voter).getVotingPower();
+            standings.put(candidate,v);
         }
         Language.sendMessage(chunkyPlayer,ChatColor.GRAY + "|-------------------" +ChatColor.GREEN + "[Votes]" + ChatColor.GRAY + "-------------------|");
         for(String candidate : standings.keySet()) {
@@ -242,11 +244,15 @@ public class ChunkyTown extends ChunkyObject {
     }
 
     public int getAverageInfluence() {
+        return getTotalInfluence()/getResidents().size();
+    }
+
+    public int getTotalInfluence() {
         int influence = 0;
         HashSet<ChunkyObject> residents = getResidents();
         for(ChunkyObject chunkyObject : residents) {
             influence+= new ChunkyResident(chunkyObject.getName()).getPlayTime();}
-        return influence/residents.size();
+        return influence;
     }
 
     public enum Stance {

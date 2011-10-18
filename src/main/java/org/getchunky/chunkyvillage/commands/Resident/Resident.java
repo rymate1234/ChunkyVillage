@@ -33,7 +33,8 @@ public class Resident implements ChunkyCommandExecutor{
 
         sender.sendMessage(
                 ChatColor.GRAY + "| " + ChatColor.GREEN + "Bank: " + ChatColor.YELLOW + chunkyResident.getAccount().balance() +
-                ChatColor.GRAY + " | "+ ChatColor.GREEN + "Influence: " + ChatColor.YELLOW + chunkyResident.getPlayTime());
+                ChatColor.GRAY + " | "+ ChatColor.GREEN + "Influence: " + ChatColor.YELLOW + chunkyResident.getPlayTime() +
+                ChatColor.GRAY + " | "+ ChatColor.GREEN + "Voting Power: " + ChatColor.YELLOW + chunkyResident.getVotingPower());
         ChunkyTown chunkyTown = chunkyResident.getTown();
 
         if(chunkyTown == null) return;

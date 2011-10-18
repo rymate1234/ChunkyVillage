@@ -35,8 +35,12 @@ public class Vote implements ChunkyCommandExecutor{
             Language.sendBad(chunkyResident.getChunkyPlayer(), candidate.getName() + " is not part of your town.");
             return;}
 
+        if(chunkyResident.getVotingPower() < 1) {
+            Language.sendBad(chunkyResident.getChunkyPlayer(), "You have 0 votes. Increase your Influence.");
+            return;}
+
         int i = chunkyTown.addVote(chunkyResident,candidate);
-        int required = chunkyTown.getResidents().size() * Config.Options.ELECTION_PERCENTAGE.getInt()/100;
+        int required = chunkyTown.getTotalInfluence() * Config.Options.ELECTION_PERCENTAGE.getInt()/100;
         chunkyTown.goodMessageTown("Someone has voted for " + candidate.getName() + ", " + i + " total votes with " + (required-i) + " left to go.");
         if(required <= i) {
             if(!candidate.getName().equals(chunkyTown.getOwner().getName()))chunkyTown.setMayor(candidate);

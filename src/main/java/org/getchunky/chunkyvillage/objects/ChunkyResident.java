@@ -8,6 +8,7 @@ import org.getchunky.chunky.exceptions.ChunkyPlayerOfflineException;
 import org.getchunky.chunky.object.ChunkyObject;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunkyvillage.ChunkyTownManager;
+import org.getchunky.chunkyvillage.util.Config;
 import org.getchunky.register.payment.Method;
 import org.json.JSONObject;
 
@@ -52,7 +53,7 @@ public class ChunkyResident {
     }
 
     public void login() {
-        chunkyPlayer.getData().put("village-lastJoin",System.currentTimeMillis());
+        chunkyPlayer.getData().put("village-lastJoin", System.currentTimeMillis());
         chunkyPlayer.save();
     }
 
@@ -65,6 +66,11 @@ public class ChunkyResident {
         long time = (getPlayTime()-playTime);
         setPlayTime( time < 0 ? 0 : time);
     }
+
+    public long getVotingPower() {
+        return this.getPlayTime() / Config.Options.INFLUENCE_PER_VOTE.getInt();
+    }
+
 
     public long getPlayTime() {
         long curTime = System.currentTimeMillis();
