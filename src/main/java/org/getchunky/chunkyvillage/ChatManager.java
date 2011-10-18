@@ -54,7 +54,7 @@ public class ChatManager {
             ChunkyTown chunkyTown = sender.getTown();
             for(Player p : Bukkit.getServer().getOnlinePlayers()) {
                 if(!chunkyTown.isResident(new ChunkyResident(p))) continue;
-                Language.sendMessage(player, formatted);}}
+                Language.sendMessage(p, formatted);}}
 
         return true;
     }
