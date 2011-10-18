@@ -4,7 +4,7 @@ import org.bukkit.command.CommandSender;
 
 public enum Permissions {
 
-    ADMIN("chunky.admin");
+    ADMIN("chunky.town.admin");
 
     private String node;
 
