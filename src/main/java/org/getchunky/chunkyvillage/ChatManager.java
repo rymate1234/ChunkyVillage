@@ -65,6 +65,7 @@ public class ChatManager {
         try {player = sender.getChunkyPlayer().getPlayer();} catch (ChunkyPlayerOfflineException e) {return "";}
         if(chatMode == ChatMode.TOWN_CHAT) filter = Config.Options.TOWN_CHAT_FORMAT.getString();
         return filter
+                .replace("&","§")
                 .replace("%town%", sender.getTown().getName())
                 .replace("%displayname%", player.getDisplayName())
                 .replace("%name%", player.getName())

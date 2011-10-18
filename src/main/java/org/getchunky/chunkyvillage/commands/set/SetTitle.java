@@ -37,7 +37,7 @@ public class SetTitle implements ChunkyCommandExecutor{
             Language.sendBad(chunkyResident.getChunkyPlayer(), "You do not have the authority to do this");
             return;}
 
-        target.setTitle(title);
+        target.setTitle(title.replace("&","§"));
         Language.sendGood(chunkyResident.getChunkyPlayer(), "You have changed " + target.getName()+ "'s to " + title);
     }
 }
