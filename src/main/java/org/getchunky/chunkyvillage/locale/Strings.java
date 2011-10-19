@@ -17,7 +17,7 @@ public enum Strings {
     SPECIFY_TOWN_AND_PLAYER("specifyTownAndPlayer", "Please specify town and player to add."),
     SPECIFY_PLAYER("specifyPlayer", "Please specify player"),
     SPECIFY_AMOUNT("specifyAmount", "Please specify amount."),
-    SPECIFY_NUMBER("specifyNumber", "Please a proper number."),
+    SPECIFY_NUMBER("specifyNumber", "Please specify a proper number."),
     UNKNOWN_TOWN("unknownTown", "This town could not be found: %1."),
     UNKNOWN_PLAYER("unknownPlayer", "This player does not exist: %1"),
     ALREADY_IN_TOWN("alreadyInTown", "%1 is already a part of %2"),
@@ -32,7 +32,8 @@ public enum Strings {
     NO_KICK("noKick", "You may not kick assistants or the mayor."),
     NOT_TOWN_LAND("notTownLand", "This is not town land."),
     NOT_OWNED("notOwned", "You do not own this land."),
-    FORSALE("forsale", "This plot is on sale for &e%1&f")
+    FORSALE("forsale", "This plot is on sale for &e%1&f"),
+    INFLUENCE_SET("influenceSet", "Influence has been set to %1 for %2.")
     ;
 
     private String path;

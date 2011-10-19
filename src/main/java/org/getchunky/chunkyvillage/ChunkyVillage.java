@@ -15,6 +15,8 @@ import org.getchunky.chunky.module.ChunkyCommand;
 import org.getchunky.chunkyvillage.commands.Admin.Admin;
 import org.getchunky.chunkyvillage.commands.Admin.AdminAddResident;
 import org.getchunky.chunkyvillage.commands.Admin.AdminKickResident;
+import org.getchunky.chunkyvillage.commands.Admin.Set.AdminSet;
+import org.getchunky.chunkyvillage.commands.Admin.Set.SetInfluence;
 import org.getchunky.chunkyvillage.commands.Resident.Resident;
 import org.getchunky.chunkyvillage.commands.Town.List;
 import org.getchunky.chunkyvillage.commands.Town.*;
@@ -137,6 +139,10 @@ public class ChunkyVillage extends JavaPlugin {
 
             ChunkyCommand adminKickResident = new ChunkyCommand("kick", new AdminKickResident(),admin).setAliases("k").setDescription("Kicks resident from town.").setHelpLines("/admin kick <player> or /a k <player>");
 
+            ChunkyCommand adminSet = new ChunkyCommand("set", new AdminSet(), admin).setAliases("s").setDescription("Sets various options.").setHelpLines("/admin set ? or /a s ?");
+
+            ChunkyCommand setInfluence = new ChunkyCommand("influence", new SetInfluence(), adminSet).setAliases("i").setDescription("Sets influence for player.").setHelpLines("/admin set influence [player] <influence> or /a s i [player] <influence>");
+
             //Town Commands
             Chunky.getModuleManager().registerCommand(town);
             Chunky.getModuleManager().registerCommand(newTown);
@@ -168,6 +174,8 @@ public class ChunkyVillage extends JavaPlugin {
             Chunky.getModuleManager().registerCommand(admin);
             Chunky.getModuleManager().registerCommand(adminAddResident);
             Chunky.getModuleManager().registerCommand(adminKickResident);
+            Chunky.getModuleManager().registerCommand(adminSet);
+            Chunky.getModuleManager().registerCommand(setInfluence);
 
         } catch (ChunkyUnregisteredException e) {
             e.printStackTrace();

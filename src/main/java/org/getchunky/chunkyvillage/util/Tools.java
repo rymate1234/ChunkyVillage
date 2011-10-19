@@ -16,4 +16,12 @@ public class Tools {
             return -1;
         }
     }
+
+    public static int parseInt(String s) {
+        try{
+            return Integer.parseInt(s);
+        } catch(Exception ex) {
+            return -1;
+        }
+    }
 }
