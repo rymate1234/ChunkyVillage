@@ -53,6 +53,6 @@ public class KickResident implements ChunkyCommandExecutor{
 
         chunkyTown.kickResident(toKick);
         Strings.KICKED_PLAYER.good(chunkyResident, toKick.getName(), chunkyTown.getName());
-        Strings.NOTIFY_KICKED.bad(chunkyResident, chunkyTown.getName());
+        Strings.NOTIFY_KICKED.bad(toKick, chunkyTown.getName());
     }
 }
