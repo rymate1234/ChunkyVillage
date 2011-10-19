@@ -11,6 +11,7 @@ import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunkyvillage.ChunkyTownManager;
 import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
+import org.getchunky.chunkyvillage.permissions.Permissions;
 
 public class NewTown implements ChunkyCommandExecutor{
 
@@ -19,7 +20,7 @@ public class NewTown implements ChunkyCommandExecutor{
             Language.IN_GAME_ONLY.bad(sender);
             return;
         }
-        if(!(sender.hasPermission("chunky.town.create"))) {
+        if(!Permissions.CREATE_TOWN.has(sender)) {
             Language.NO_COMMAND_PERMISSION.bad(sender);
             return;
         }

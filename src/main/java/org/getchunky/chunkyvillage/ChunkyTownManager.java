@@ -3,7 +3,6 @@ package org.getchunky.chunkyvillage;
 import org.bukkit.entity.Player;
 import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.ChunkyManager;
-import org.getchunky.chunky.locale.Language;
 import org.getchunky.chunky.object.ChunkyObject;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
@@ -41,18 +40,6 @@ public class ChunkyTownManager {
             String id = chunkyPlayer.getData().getString("mayor");
             return getTown(id);
         } catch (JSONException e) {return null;}
-    }
-
-    public static boolean pay(ChunkyPlayer seller, ChunkyPlayer buyer, double amount) {
-        Method.MethodAccount source = getAccount(buyer);
-        Method.MethodAccount target = getAccount(seller);
-        if(!source.hasEnough(amount)) {
-            Language.sendBad(buyer, "You cannot afford " + Chunky.getMethod().format(amount));
-            return false;
-        }
-        source.subtract(amount);
-        target.add(amount);
-        return true;
     }
 
     public static Method.MethodAccount getAccount(ChunkyObject chunkyObject) {

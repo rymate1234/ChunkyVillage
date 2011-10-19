@@ -2,11 +2,9 @@ package org.getchunky.chunkyvillage.listeners;
 
 import org.bukkit.event.player.*;
 import org.getchunky.chunkyvillage.ChatManager;
+import org.getchunky.chunkyvillage.config.Config;
 import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
-import org.getchunky.chunkyvillage.util.Config;
-
-import static org.getchunky.chunkyvillage.util.Config.Options;
 
 public class PlayerEvents extends PlayerListener{
     @Override

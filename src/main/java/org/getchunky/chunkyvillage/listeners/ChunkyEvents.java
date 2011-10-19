@@ -3,9 +3,7 @@ package org.getchunky.chunkyvillage.listeners;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.entity.TNTPrimed;
 import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.event.object.player.ChunkyPlayerBuildEvent;
@@ -17,12 +15,12 @@ import org.getchunky.chunky.object.ChunkyChunk;
 import org.getchunky.chunky.object.ChunkyCoordinates;
 import org.getchunky.chunkyvillage.ChunkyTownManager;
 import org.getchunky.chunkyvillage.ChunkyVillage;
+import org.getchunky.chunkyvillage.config.Config;
 import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
 import org.getchunky.chunkyvillage.objects.TownChunk;
 import org.getchunky.chunkyvillage.tasks.Explode;
 import org.getchunky.chunkyvillage.tasks.RemoveBlock;
-import org.getchunky.chunkyvillage.util.Config;
 
 public class ChunkyEvents extends ChunkyPlayerListener {
     @Override

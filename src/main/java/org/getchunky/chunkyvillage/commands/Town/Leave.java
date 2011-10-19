@@ -9,6 +9,7 @@ import org.getchunky.chunky.module.ChunkyCommandExecutor;
 import org.getchunky.chunky.object.ChunkyChunk;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunkyvillage.ChunkyTownManager;
+import org.getchunky.chunkyvillage.locale.Strings;
 import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
 
@@ -22,7 +23,7 @@ public class Leave implements ChunkyCommandExecutor{
         ChunkyResident chunkyResident = new ChunkyResident(player);
         ChunkyTown chunkyTown = chunkyResident.getTown();
         if(chunkyTown == null) {
-            Language.sendBad(chunkyResident.getChunkyPlayer(),"You do not belong to a town.");
+            Strings.NO_TOWN.bad(chunkyResident);
             return;
         }
         if(chunkyResident.isMayor()) {

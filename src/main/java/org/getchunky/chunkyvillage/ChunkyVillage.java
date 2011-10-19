@@ -10,7 +10,6 @@ import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.event.ChunkyEvent;
 import org.getchunky.chunky.exceptions.ChunkyUnregisteredException;
 import org.getchunky.chunky.module.ChunkyCommand;
-import org.getchunky.chunky.util.Logging;
 import org.getchunky.chunkyvillage.commands.Admin.Admin;
 import org.getchunky.chunkyvillage.commands.Admin.AdminAddResident;
 import org.getchunky.chunkyvillage.commands.Admin.AdminKickResident;
@@ -21,9 +20,9 @@ import org.getchunky.chunkyvillage.commands.Town.set.*;
 import org.getchunky.chunkyvillage.commands.Town.toggle.Toggle;
 import org.getchunky.chunkyvillage.commands.Town.toggle.ToggleAssistant;
 import org.getchunky.chunkyvillage.commands.Town.toggle.ToggleTownChat;
+import org.getchunky.chunkyvillage.config.Config;
 import org.getchunky.chunkyvillage.listeners.ChunkyEvents;
 import org.getchunky.chunkyvillage.listeners.PlayerEvents;
-import org.getchunky.chunkyvillage.util.Config;
 import org.getchunky.chunkyvillage.util.Updater;
 
 public class ChunkyVillage extends JavaPlugin {

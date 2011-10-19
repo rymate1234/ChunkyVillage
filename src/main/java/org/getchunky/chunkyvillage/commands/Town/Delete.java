@@ -8,6 +8,7 @@ import org.getchunky.chunky.module.ChunkyCommand;
 import org.getchunky.chunky.module.ChunkyCommandExecutor;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunkyvillage.ChunkyTownManager;
+import org.getchunky.chunkyvillage.locale.Strings;
 import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
 
@@ -19,7 +20,7 @@ public class Delete implements ChunkyCommandExecutor{
         ChunkyResident chunkyResident = new ChunkyResident(sender);
 
         if(!chunkyResident.isMayor()) {
-            Language.sendBad(chunkyResident.getChunkyPlayer(), "You do not have the authority to do this.");
+            Strings.NO_AUTHORITY.bad(chunkyResident);
             return;
         }
         ChunkyTown chunkyTown = chunkyResident.getTown();

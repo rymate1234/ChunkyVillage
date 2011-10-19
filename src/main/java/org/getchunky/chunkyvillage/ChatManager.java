@@ -1,17 +1,14 @@
 package org.getchunky.chunkyvillage;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.getchunky.chunky.exceptions.ChunkyPlayerOfflineException;
 import org.getchunky.chunky.locale.Language;
-import org.getchunky.chunky.object.ChunkyObject;
+import org.getchunky.chunkyvillage.config.Config;
 import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
-import org.getchunky.chunkyvillage.util.Config;
 
 import java.util.HashMap;
-import java.util.HashSet;
 
 public class ChatManager {
 
@@ -53,6 +50,7 @@ public class ChatManager {
             String formatted = formatChat(sender, message, chatMode);
             ChunkyTown chunkyTown = sender.getTown();
             for(Player p : Bukkit.getServer().getOnlinePlayers()) {
+                ChunkyResident cr = new ChunkyResident(p);
                 if(!chunkyTown.isResident(new ChunkyResident(p))) continue;
                 Language.sendMessage(p, formatted);}}
 

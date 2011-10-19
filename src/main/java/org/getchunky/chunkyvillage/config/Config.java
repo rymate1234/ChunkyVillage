@@ -1,4 +1,4 @@
-package org.getchunky.chunkyvillage.util;
+package org.getchunky.chunkyvillage.config;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.util.config.Configuration;

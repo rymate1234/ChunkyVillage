@@ -12,18 +12,16 @@ import org.getchunky.chunky.object.ChunkyGroup;
 import org.getchunky.chunky.object.ChunkyObject;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunky.permission.PermissionFlag;
-import org.getchunky.chunkyvillage.util.Config;
 import org.getchunky.register.payment.Method;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 
-import static org.getchunky.chunkyvillage.util.Config.Options;
-import static org.getchunky.chunkyvillage.util.Config.Options.ELECTION_PERCENTAGE;
-import static org.getchunky.chunkyvillage.util.Config.Options.INFLUENCE_PER_VOTE;
+import static org.getchunky.chunkyvillage.config.Config.Options;
+import static org.getchunky.chunkyvillage.config.Config.Options.ELECTION_PERCENTAGE;
+import static org.getchunky.chunkyvillage.config.Config.Options.INFLUENCE_PER_VOTE;
 
 public class ChunkyTown extends ChunkyObject {
 

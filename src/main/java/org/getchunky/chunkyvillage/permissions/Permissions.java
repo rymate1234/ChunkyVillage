@@ -4,7 +4,9 @@ import org.bukkit.command.CommandSender;
 
 public enum Permissions {
 
-    ADMIN("chunky.town.admin");
+    ADMIN("chunky.town.admin"),
+    CREATE_TOWN("chunky.town.create"),
+    TELEPORT("chunky.town.teleport");
 
     private String node;
 

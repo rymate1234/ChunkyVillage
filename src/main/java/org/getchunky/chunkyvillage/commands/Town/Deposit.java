@@ -8,6 +8,7 @@ import org.getchunky.chunky.module.ChunkyCommand;
 import org.getchunky.chunky.module.ChunkyCommandExecutor;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunkyvillage.ChunkyTownManager;
+import org.getchunky.chunkyvillage.locale.Strings;
 import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
 import org.getchunky.chunkyvillage.util.Tools;
@@ -22,14 +23,14 @@ public class Deposit implements ChunkyCommandExecutor{
         ChunkyResident chunkyResident = new ChunkyResident(sender);
 
         if(strings.length < 1) {
-            Language.sendBad(chunkyResident.getChunkyPlayer(),"You must specify the amount to deposit.");
+            Strings.SPECIFY_AMOUNT.bad(chunkyResident);
             return;
         }
 
         double amount = Tools.parseDouble(strings[0]);
 
         if(amount < 1) {
-            Language.sendBad(chunkyResident.getChunkyPlayer(),"Please specify a proper number.");
+            Strings.SPECIFY_NUMBER.bad(chunkyResident);
             return;
         }
 

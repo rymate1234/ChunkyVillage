@@ -9,6 +9,7 @@ import org.getchunky.chunky.module.ChunkyCommandExecutor;
 import org.getchunky.chunky.object.ChunkyChunk;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunkyvillage.ChunkyTownManager;
+import org.getchunky.chunkyvillage.locale.Strings;
 import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
 import org.getchunky.chunkyvillage.objects.TownChunk;
@@ -25,17 +26,17 @@ public class ForSale implements ChunkyCommandExecutor{
         ChunkyChunk chunkyChunk = chunkyResident.getChunkyPlayer().getCurrentChunk();
         ChunkyTown chunkyTown = chunkyResident.getTown();
         if(chunkyTown == null) {
-            Language.sendBad(chunkyResident.getChunkyPlayer(),"You do not belong to a town.");
+            Strings.NO_TOWN.bad(chunkyResident);
             return;
         }
 
         if(!chunkyTown.isOwnerOf(chunkyChunk)) {
-            Language.sendBad(chunkyResident.getChunkyPlayer(),"This is not town land.");
+            Strings.NOT_TOWN_LAND.bad(chunkyResident);
             return;
         }
 
         if(!chunkyResident.owns(chunkyChunk) && !chunkyResident.isAssistantOrMayor()) {
-            Language.sendBad(chunkyResident.getChunkyPlayer(), "You do not own this land.");
+            Strings.NOT_OWNED.bad(chunkyResident);
             return;
         }
 
@@ -43,10 +44,10 @@ public class ForSale implements ChunkyCommandExecutor{
 
         if(strings.length > 0) {
             cost = Tools.parseDouble(strings[0]);
-            if(cost<0) {
-                Language.sendBad(chunkyResident.getChunkyPlayer(),"This is not a valid number.");}}
+            if(cost<0)
+                Strings.SPECIFY_NUMBER.bad(chunkyResident);}
 
         new TownChunk(chunkyChunk).setForSale(cost);
-        Language.sendGood(chunkyResident.getChunkyPlayer(),"This plot is on sale for " + cost);
+        Strings.FORSALE.good(chunkyResident, cost);
     }
 }

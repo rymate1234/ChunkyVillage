@@ -7,10 +7,9 @@ import org.getchunky.chunky.module.ChunkyCommand;
 import org.getchunky.chunky.module.ChunkyCommandExecutor;
 import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
-import org.getchunky.chunkyvillage.util.Config;
 
-import static org.getchunky.chunkyvillage.util.Config.Options.ELECTION_PERCENTAGE;
-import static org.getchunky.chunkyvillage.util.Config.Options.INFLUENCE_PER_VOTE;
+import static org.getchunky.chunkyvillage.config.Config.Options.ELECTION_PERCENTAGE;
+import static org.getchunky.chunkyvillage.config.Config.Options.INFLUENCE_PER_VOTE;
 
 public class Vote implements ChunkyCommandExecutor{
 
