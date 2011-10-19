@@ -36,6 +36,11 @@ public class Config {
             this.def = def;
         }
 
+        public Object get() {
+            if(configuration.getProperty(path) == null) configuration.setProperty(path, def);
+            return configuration.getProperty(path);
+        }
+
         public String getString() {
             return configuration.getString(path, def.toString());}
 
@@ -59,7 +64,7 @@ public class Config {
 
     private static void loadDefaults() {
         for(Options option : Options.values()) {
-            option.getString();}
+            option.get();}
         loadWarTools();
     }
 
