@@ -59,7 +59,7 @@ public class ChunkyResident {
 
     public void setPlayTime(long playTime) {
         chunkyPlayer.getData().put("village-playTime", playTime);
-        chunkyPlayer.save();
+        login();
     }
 
     public void subtractPlayTime(long playTime) {

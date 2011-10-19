@@ -13,6 +13,7 @@ import org.getchunky.chunky.event.object.player.ChunkyPlayerListener;
 import org.getchunky.chunky.locale.Language;
 import org.getchunky.chunky.object.ChunkyChunk;
 import org.getchunky.chunky.object.ChunkyCoordinates;
+import org.getchunky.chunky.util.Logging;
 import org.getchunky.chunkyvillage.ChunkyTownManager;
 import org.getchunky.chunkyvillage.ChunkyVillage;
 import org.getchunky.chunkyvillage.config.Config;
@@ -109,6 +110,8 @@ public class ChunkyEvents extends ChunkyPlayerListener {
             Language.sendBad(attacker.getChunkyPlayer(), "You do not have enough Influence to do this.");
             return;
         }
+
+        Logging.info(cost +"");
 
         attacker.subtractPlayTime(cost);
         event.setCancelled(false);
