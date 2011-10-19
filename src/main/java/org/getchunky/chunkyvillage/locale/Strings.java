@@ -3,6 +3,7 @@ package org.getchunky.chunkyvillage.locale;
 import org.bukkit.ChatColor;
 import org.bukkit.util.config.Configuration;
 import org.getchunky.chunkyvillage.ChunkyVillage;
+import org.getchunky.chunkyvillage.config.Config;
 import org.getchunky.chunkyvillage.objects.ChunkyResident;
 
 import java.io.File;
@@ -73,7 +74,7 @@ public enum Strings {
 
     public static void load() {
        if(!ChunkyVillage.getInstance().getDataFolder().exists()) ChunkyVillage.getInstance().getDataFolder().mkdir();
-       file = new Configuration(new File(ChunkyVillage.getInstance().getDataFolder(), "english.yml"));
+       file = new Configuration(new File(ChunkyVillage.getInstance().getDataFolder(), Config.Options.LANGUAGE_FILE.getString()));
        file.load();
        loadDefaults();
        file.save();
