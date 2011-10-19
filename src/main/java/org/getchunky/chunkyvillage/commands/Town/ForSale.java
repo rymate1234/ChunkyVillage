@@ -2,6 +2,7 @@ package org.getchunky.chunkyvillage.commands.Town;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.locale.Language;
 import org.getchunky.chunky.module.ChunkyCommand;
@@ -48,6 +49,6 @@ public class ForSale implements ChunkyCommandExecutor{
                 Strings.SPECIFY_NUMBER.bad(chunkyResident);}
 
         new TownChunk(chunkyChunk).setForSale(cost);
-        Strings.FORSALE.good(chunkyResident, cost);
+        Strings.FORSALE.good(chunkyResident, Chunky.getMethod().format(cost));
     }
 }
