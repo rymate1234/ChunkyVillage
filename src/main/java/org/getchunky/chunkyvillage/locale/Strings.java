@@ -1,7 +1,11 @@
 package org.getchunky.chunkyvillage.locale;
 
 import org.bukkit.ChatColor;
+import org.bukkit.util.config.Configuration;
+import org.getchunky.chunkyvillage.ChunkyVillage;
 import org.getchunky.chunkyvillage.objects.ChunkyResident;
+
+import java.io.File;
 
 public enum Strings {
 
@@ -41,7 +45,7 @@ public enum Strings {
     }
 
     public String get() {
-        return Language.getFile().getString(path, string);
+        return file.getString(path, string);
     }
 
     public void good(ChunkyResident chunkyResident, Object... args) {
@@ -63,5 +67,19 @@ public enum Strings {
                 chunkyResident.getChunkyPlayer(),
                 string,
                 args);
+    }
+
+    private static Configuration file;
+
+    public static void load() {
+       if(!ChunkyVillage.getInstance().getDataFolder().exists()) ChunkyVillage.getInstance().getDataFolder().mkdir();
+       file = new Configuration(new File(ChunkyVillage.getInstance().getDataFolder(), "english.yml"));
+       file.load();
+       loadDefaults();
+       file.save();
+    }
+    private static void loadDefaults() {
+       for(Strings string : Strings.values()) {
+           string.get();}
     }
 }

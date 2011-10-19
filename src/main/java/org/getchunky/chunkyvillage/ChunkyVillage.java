@@ -9,6 +9,7 @@ import org.bukkitstats.CallHome;
 import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.event.ChunkyEvent;
 import org.getchunky.chunky.exceptions.ChunkyUnregisteredException;
+import org.getchunky.chunky.locale.Language;
 import org.getchunky.chunky.module.ChunkyCommand;
 import org.getchunky.chunkyvillage.commands.Admin.Admin;
 import org.getchunky.chunkyvillage.commands.Admin.AdminAddResident;
@@ -23,6 +24,7 @@ import org.getchunky.chunkyvillage.commands.Town.toggle.ToggleTownChat;
 import org.getchunky.chunkyvillage.config.Config;
 import org.getchunky.chunkyvillage.listeners.ChunkyEvents;
 import org.getchunky.chunkyvillage.listeners.PlayerEvents;
+import org.getchunky.chunkyvillage.locale.Strings;
 import org.getchunky.chunkyvillage.util.Updater;
 
 public class ChunkyVillage extends JavaPlugin {
@@ -49,6 +51,8 @@ public class ChunkyVillage extends JavaPlugin {
             Bukkit.getServer().shutdown();}
 
         Config.load();
+
+        Strings.load();
 
         Chunky.getModuleManager().registerModule(this);
 
