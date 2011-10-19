@@ -98,7 +98,7 @@ public class ChunkyEvents extends ChunkyPlayerListener {
         ChunkyTown attackingTown = attacker.getTown();
 
         if(attackingTown == null) return;
-
+        if(defendingTown == attackingTown) return;
         if(defendingTown.getEffectiveStance(attackingTown) != ChunkyTown.Stance.ENEMY) {
             Language.sendBad(attacker.getChunkyPlayer(), "This is not an enemy town.");
             return;
