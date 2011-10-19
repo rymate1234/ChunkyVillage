@@ -27,3 +27,6 @@ permissions:
     chunky.town.admin:
         description: Use /admin to manage towns.
         default: op
+    chunky.town.stance:
+        description: Set stance of a town.
+        default: true

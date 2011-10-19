@@ -11,12 +11,18 @@ import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunkyvillage.ChunkyTownManager;
 import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
+import org.getchunky.chunkyvillage.permissions.Permissions;
 
 public class SetStance implements ChunkyCommandExecutor{
     public void onCommand(CommandSender sender, ChunkyCommand chunkyCommand, String s, String[] strings) {
         if(!(sender instanceof Player)) {
             Language.IN_GAME_ONLY.bad(sender);
             return;}
+
+        if(!Permissions.STANCE.has(sender)) {
+            Language.NO_COMMAND_PERMISSION.bad(sender);
+            return;
+        }
 
         ChunkyResident chunkyResident = new ChunkyResident(sender);
         if(strings.length < 2) {

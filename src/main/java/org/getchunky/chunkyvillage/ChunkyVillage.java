@@ -1,6 +1,7 @@
 package org.getchunky.chunkyvillage;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
@@ -70,6 +71,8 @@ public class ChunkyVillage extends JavaPlugin {
         pm.registerEvent(Event.Type.PLAYER_QUIT, playerEvents, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.PLAYER_TELEPORT, playerEvents, Event.Priority.Highest, this);
         pm.registerEvent(Event.Type.PLAYER_CHAT, playerEvents, Event.Priority.Low, this);
+
+
 
 
 
