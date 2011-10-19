@@ -63,7 +63,7 @@ public class ChunkyResident {
     }
 
     public void subtractPlayTime(long playTime) {
-        long time = (getPlayTime()-playTime);
+        long time = (getPlayTime()-Math.abs(playTime));
         setPlayTime( time < 0 ? 0 : time);
     }
 
