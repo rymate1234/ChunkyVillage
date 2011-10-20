@@ -83,7 +83,7 @@ public class ChunkyResident {
     }
 
     public void setTitle(String title) {
-        chunkyPlayer.getData().put("village-title", title);
+        chunkyPlayer.getData().put("village-title", title.replace("&","§"));
         chunkyPlayer.save();
         applyTitle();
     }
@@ -96,6 +96,8 @@ public class ChunkyResident {
     public void removeTitle() {
         chunkyPlayer.getData().remove("village-title");
         chunkyPlayer.save();
+        try {chunkyPlayer.getPlayer().setDisplayName(chunkyPlayer.getName());} catch (Exception e) {}
+
     }
 
     public boolean hasTitle() {
