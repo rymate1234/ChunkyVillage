@@ -14,11 +14,6 @@ import org.getchunky.chunkyvillage.permissions.Permissions;
 public class AdminKickResident implements ChunkyCommandExecutor{
 
     public void onCommand(CommandSender sender, ChunkyCommand chunkyCommand, String s, String[] strings) {
-        if(!(sender instanceof Player)) {
-            Language.IN_GAME_ONLY.bad(sender);
-            return;
-        }
-
         if(!Permissions.ADMIN.has(sender)) {
             Language.NO_COMMAND_PERMISSION.bad(sender);
             return;

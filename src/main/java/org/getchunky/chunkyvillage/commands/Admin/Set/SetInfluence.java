@@ -12,11 +12,6 @@ import org.getchunky.chunkyvillage.util.Tools;
 
 public class SetInfluence implements ChunkyCommandExecutor {
     public void onCommand(CommandSender sender, ChunkyCommand command, String label, String[] args) {
-        if(!(sender instanceof Player)) {
-            Language.IN_GAME_ONLY.bad(sender);
-            return;
-        }
-
         if(!Permissions.ADMIN.has(sender)) {
             Language.NO_COMMAND_PERMISSION.bad(sender);
             return;
