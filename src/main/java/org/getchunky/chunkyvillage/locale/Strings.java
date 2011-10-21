@@ -36,7 +36,8 @@ public enum Strings {
     FORSALE("forsale", "This plot is on sale for &e%1&f"),
     INFLUENCE_SET("influenceSet", "Influence has been set to %1 for %2."),
     NO_TELEPORT("noTeleport", "You cannot teleport from here."),
-    CONFIG_RELOADED("configReloaded", "The configuration was reloaded.")
+    CONFIG_RELOADED("configReloaded", "The configuration was reloaded."),
+    CANNON("cannon", "CANNON FIRED!!!")
     ;
 
     private String path;

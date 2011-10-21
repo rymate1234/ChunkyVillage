@@ -1,5 +1,8 @@
 package org.getchunky.chunkyvillage.listeners;
 
+import org.bukkit.Material;
+import org.bukkit.block.BlockFace;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.*;
 import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunkyvillage.ChatManager;
@@ -9,8 +12,18 @@ import org.getchunky.chunkyvillage.objects.ChunkyResident;
 import org.getchunky.chunkyvillage.objects.ChunkyTown;
 import org.getchunky.chunkyvillage.objects.TownChunk;
 import org.getchunky.chunkyvillage.permissions.Permissions;
+import org.getchunky.chunkyvillage.wartools.Cannon;
 
 public class PlayerEvents extends PlayerListener{
+
+    @Override
+    public void onPlayerInteract(PlayerInteractEvent event) {
+        if(event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR)
+            if(event.getPlayer().getItemInHand().getType() == Material.SULPHUR);
+                if(event.getPlayer().getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.LAPIS_BLOCK)
+                    Cannon.fire(event.getPlayer());
+    }
+
     @Override
     public void onPlayerRespawn(PlayerRespawnEvent event) {
 

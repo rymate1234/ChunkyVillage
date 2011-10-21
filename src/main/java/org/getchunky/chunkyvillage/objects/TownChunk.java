@@ -1,5 +1,7 @@
 package org.getchunky.chunkyvillage.objects;
 
+import org.bukkit.Location;
+import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.locale.Language;
 import org.getchunky.chunky.object.ChunkyChunk;
 import org.getchunky.chunky.object.ChunkyPlayer;
@@ -11,6 +13,10 @@ public class TownChunk {
 
     public TownChunk(ChunkyChunk chunkyChunk) {
         this.chunkyChunk = chunkyChunk;
+    }
+
+    public TownChunk(Location location) {
+        this(ChunkyManager.getChunkyChunk(location));
     }
 
     public ChunkyTown getTown() {
