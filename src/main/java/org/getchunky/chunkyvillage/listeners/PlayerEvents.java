@@ -48,7 +48,7 @@ public class PlayerEvents extends PlayerListener{
     @Override
     public void onPlayerTeleport(PlayerTeleportEvent event) {
         if(Permissions.TELEPORT.has(event.getPlayer())) return;
-        if(event.getTo().distance(event.getFrom()) < 5) return;
+        if(event.getFrom().getWorld().equals(event.getTo().getWorld()) && event.getFrom().distance(event.getTo()) < 5) return;
 
         ChunkyResident chunkyResident = new ChunkyResident(event.getPlayer());
         ChunkyTown myTown = chunkyResident.getTown();
