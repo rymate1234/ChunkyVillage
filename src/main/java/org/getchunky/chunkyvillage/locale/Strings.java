@@ -1,6 +1,7 @@
 package org.getchunky.chunkyvillage.locale;
 
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.util.config.Configuration;
 import org.getchunky.chunkyvillage.ChunkyVillage;
 import org.getchunky.chunkyvillage.config.Config;
@@ -34,7 +35,8 @@ public enum Strings {
     NOT_OWNED("notOwned", "You do not own this land."),
     FORSALE("forsale", "This plot is on sale for &e%1&f"),
     INFLUENCE_SET("influenceSet", "Influence has been set to %1 for %2."),
-    NO_TELEPORT("noTeleport", "You cannot teleport from here.")
+    NO_TELEPORT("noTeleport", "You cannot teleport from here."),
+    CONFIG_RELOADED("configReloaded", "The configuration was reloaded.")
     ;
 
     private String path;
@@ -49,6 +51,10 @@ public enum Strings {
 
     public String get() {
         return file.getString(path, string);
+    }
+
+    public void good(CommandSender sender, Object... args) {
+        good(new ChunkyResident(sender), args);
     }
 
     public void good(ChunkyResident chunkyResident, Object... args) {
