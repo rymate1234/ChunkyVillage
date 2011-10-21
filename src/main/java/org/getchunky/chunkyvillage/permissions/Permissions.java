@@ -7,7 +7,8 @@ public enum Permissions {
     ADMIN("chunky.town.admin"),
     CREATE_TOWN("chunky.town.create"),
     TELEPORT("chunky.town.teleport"),
-    STANCE("chunky.town.stance");
+    STANCE("chunky.town.stance"),
+    WARMUP("chunky.town.warmup");
 
     private String node;
 

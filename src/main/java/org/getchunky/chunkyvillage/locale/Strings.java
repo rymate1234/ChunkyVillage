@@ -33,7 +33,8 @@ public enum Strings {
     NOT_TOWN_LAND("notTownLand", "This is not town land."),
     NOT_OWNED("notOwned", "You do not own this land."),
     FORSALE("forsale", "This plot is on sale for &e%1&f"),
-    INFLUENCE_SET("influenceSet", "Influence has been set to %1 for %2.")
+    INFLUENCE_SET("influenceSet", "Influence has been set to %1 for %2."),
+    NO_TELEPORT("noTeleport", "You cannot teleport from here.")
     ;
 
     private String path;

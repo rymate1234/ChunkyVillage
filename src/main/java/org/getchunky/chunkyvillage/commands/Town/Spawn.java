@@ -33,8 +33,9 @@ public class Spawn implements ChunkyCommandExecutor{
                 Language.sendBad(chunkyResident.getChunkyPlayer(),"You cannot teleport from other town's land.");
                 return;}}
         int time = Config.Options.TELEPORT_WARMUP.getInt();
+        if(!Permissions.WARMUP.has(sender)) time = 0;
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(ChunkyVillage.getInstance(), new TeleportPlayer((Player)sender, chunkyTown.getHome().getCoord().toLocation()), 20L * time);
-        Language.sendGood(chunkyResident.getChunkyPlayer(), "You will be teleported in " + time + " seconds.");
+        if(time > 0) Language.sendGood(chunkyResident.getChunkyPlayer(), "You will be teleported in " + time + " seconds.");
 
     }
 }

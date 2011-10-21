@@ -16,7 +16,7 @@ public class TownChunk {
     public ChunkyTown getTown() {
         if(chunkyChunk.getOwner() == null) return null;
         if(chunkyChunk.getOwner() instanceof ChunkyTown) return (ChunkyTown)chunkyChunk.getOwner();
-        if(chunkyChunk.getOwner().getOwner() instanceof ChunkyTown) return (ChunkyTown)chunkyChunk.getOwner().getOwner();
+        if(chunkyChunk.getOwner() instanceof ChunkyPlayer) return new ChunkyResident(chunkyChunk.getOwner()).getTown();
         return null;
     }
 
