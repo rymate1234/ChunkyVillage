@@ -21,6 +21,9 @@ permissions:
     chunky.town.create:
         description: Create new towns.
         default: op
+    chunky.town.stance:
+        description: Set stance of a town.
+        default: true
     chunky.town.warmup:
         description: Require warmup for /t spawn.
         default: true
@@ -30,6 +33,3 @@ permissions:
     chunky.town.admin.teleport:
         description: Teleport without restrictions.
         default: op
-    chunky.town.stance:
-        description: Set stance of a town.
-        default: true

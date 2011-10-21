@@ -6,7 +6,7 @@ public enum Permissions {
 
     ADMIN("chunky.town.admin"),
     CREATE_TOWN("chunky.town.create"),
-    TELEPORT("chunky.town.teleport"),
+    TELEPORT("chunky.town.admin.teleport"),
     STANCE("chunky.town.stance"),
     WARMUP("chunky.town.warmup");
 
