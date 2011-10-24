@@ -19,7 +19,7 @@ public class PlayerEvents extends PlayerListener{
     @Override
     public void onPlayerInteract(PlayerInteractEvent event) {
         if(event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR)
-            if(event.getPlayer().getItemInHand().getType() == Material.SULPHUR);
+            if(event.getPlayer().getItemInHand().getType() == Material.SULPHUR)
                 if(event.getPlayer().getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.LAPIS_BLOCK)
                     Cannon.fire(event.getPlayer());
     }

@@ -24,7 +24,6 @@ public class Updater {
             URL url = new URL (address);
             conn = url.openConnection();
             File localfile = new File((Updater.class.getProtectionDomain().getCodeSource().getLocation().toURI()));
-            System.out.println(localfile.toPath());
             long lastmodifiedurl = conn.getLastModified();
             long lastmodifiedfile = localfile.lastModified();
             if (lastmodifiedurl > lastmodifiedfile){
