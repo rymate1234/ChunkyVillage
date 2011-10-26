@@ -6,6 +6,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.*;
 import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunkyvillage.ChatManager;
+import org.getchunky.chunkyvillage.ChunkyTownManager;
 import org.getchunky.chunkyvillage.config.Config;
 import org.getchunky.chunkyvillage.locale.Strings;
 import org.getchunky.chunkyvillage.objects.ChunkyResident;
@@ -42,6 +43,12 @@ public class PlayerEvents extends PlayerListener{
 
         //Apply title
         chunkyResident.applyTitle();
+
+        //Add to starting town.
+        if(chunkyResident.getTown() != null) return;
+        ChunkyTown town = ChunkyTownManager.getTown(Config.Options.STARTING_TOWN.getString());
+        if(town == null) return;
+        town.addResident(chunkyResident);
     }
 
 

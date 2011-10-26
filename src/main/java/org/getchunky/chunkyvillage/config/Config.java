@@ -23,6 +23,7 @@ public class Config {
         ASSISTANT_TITLE("settings.town.defaultAssistantTitle", "&5Assistant&f"),
         TELEPORT_WARMUP("settings.town.teleportWarmup", 10),
         LANGUAGE_FILE("settings.language", "english.yml"),
+        STARTING_TOWN("settings.startingTown", "none"),
 
         AUTOUPDATE("settings.autoUpdate", true),
         TNT_COST("settings.war.tools.46", 60),
